@@ -63,6 +63,13 @@ def read_article(a):
     out += f'{credits}\n</figcaption>\n'
     figure.replace_with(bs4.BeautifulSoup(out, "html.parser"))
 
+  for x in article.find_all("script", "js-embed-template"):
+    x.replace_with(bs4.BeautifulSoup(html_.unescape(x.text), "html.parser"))
+  for x in article.find_all("div", "js-embed-container"): x.unwrap()
+  for x in article.find_all("figure", {"data-type":"html"}): x.unwrap()
+  for x in article.find_all("div", {"data-section-type":"html"}): x.unwrap()
+  for x in article.find_all("script", {"src":"https://platform.twitter.com/widgets.js"}): x.decompose()
+
   show_source_of_unknown_tags(article, soup)
   a.html = cleanup(article, a.url)
 
@@ -85,7 +92,7 @@ def read_article(a):
   logo()
 
 if DEBUG: # read_article()
-  url = "https://www.derstandard.at/story/3000000213036/rabbit-r1-erste-ki-gadgets-werden-bereits-zu-ostern-verschickt"
+  url = "https://www.derstandard.at/story/3000000208222/audienz-bei-der-waldkoenigin-der-schweizer-alpen"
   a = Article(url=url, pubdate=int(time.time()))
   g.cache_urls = True
   read_article(a)

@@ -3,8 +3,8 @@ from GLOBALS import *; DEBUG = (__name__ == "__main__")
 from publishers import (
   The_Decoder, Heise, Golem, DerStandard, Tagesschau,
   ORF, Spiegel, Merkur, FAZ, Zeit, Welt, Focus,
-  ExtremNews, Press24, XKCD, IEEE_Spectrum, TechXplore,
-  TechCrunch, Wired, NYTimes
+  ExtremNews, XKCD, IEEE_Spectrum, TechXplore,
+  TechCrunch, Wired, NYTimes, Press24
 )
 
 import deep_translator
@@ -18,6 +18,7 @@ def read_new_headlines():
   dbg = []
   for pname, p in publishers.items():
     try:
+     if pname != "Press24": # das wird sonst zuviel, ich komme mit dem Lesen nicht mehr hinterher
       for a in reversed(p.read_headlines()):
         if a.url not in db.known_urls:
           dbg.append(f"\n{a=}")
@@ -49,7 +50,7 @@ def read_new_headlines():
           db.articles.append(a)
         db.known_urls[a.url] = time.time()
     except: loge()
-  #with open("DEBUG read_new_headlines.log", "w") as f: f.write("\n".join(dbg))
+  with open("DEBUG read_new_headlines.log", "w") as f: f.write("\n".join(dbg))
 
 def cleanup(a):
   def norm_chars(t):

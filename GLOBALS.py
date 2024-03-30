@@ -1,4 +1,4 @@
-import types, threading, urllib.request, urllib.parse, bs4, io, re, os, time, pickle, math
+import types, threading, urllib.request, urllib.parse, bs4, io, re, os, time, pickle, math, html as html_
 
 DEBUG = (__name__ == "__main__")
 nDEBUG = False
@@ -6,7 +6,6 @@ class g: pass
 if "IS_QPY3" in os.environ: os.chdir("/storage/emulated/0/qpython/Desktop")
 g.terminal_width = 120 if os.environ.get("USER") == "wlorenz65" else 70
 g.bottle_msg_color = "\033[36m"
-g.compiled_block_patterns = {}
 
 g.log_indent_strings = []
 g.log_insert_newline = False

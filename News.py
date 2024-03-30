@@ -1,5 +1,4 @@
 from GLOBALS import *; DEBUG = (__name__ == "__main__")
-from html import escape
 import bottle, online, atexit
 
 def build_table():
@@ -39,13 +38,13 @@ def index():
     buttons = "<p>\n<a href='/Stop'><button>Stop updating</button></a>\n</p>\n"
     progress = "<h3>Progress:</h3>\n"
     for s in g.log_indent_strings:
-      if s: progress += "<p>" + escape(s) + "</p>\n"
+      if s: progress += "<p>" + html_.escape(s) + "</p>\n"
   else:
     buttons = "<p>\n<a href='/Update'><button>Update</button></a>\n</p>\n"
     progress = ""
   if g.log_errors:
-    e = f'<pre class="error">{escape(g.log_errors[-1])}</pre>'
-    errors = f'<h3>Last of {len(g.log_errors)} new errors in "DEBUG errors.log":</h3>\n{e}\n'
+    e = f'<pre class="error">{html_.escape(g.log_errors[-1])}</pre>'
+    errors = f'<h3>Last of {len(g.log_errors)} new errors in "4 errors.log":</h3>\n{e}\n'
   else:
     errors = ""
   html = re.sub(r"(?s)<!--buttons-->.*<!--/buttons-->", "\1", html).replace("\1", buttons)
@@ -99,7 +98,7 @@ def Links(category):
   return html
 
 @bottle.route("/submit_Links/<category>")
-def Links(category):
+def submit_Links(category):
   q = bottle.request.query
   for id, s in eval(q.id_s).items():
     a = article(id)

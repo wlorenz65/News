@@ -34,7 +34,7 @@ if nDEBUG:
 if nDEBUG:
   for a in db.articles:
     old_title, old_description = a.title, a.description
-    a.update_blocked()
+    a.update_blocked(True)
     if a.title != old_title: print("\n" + old_title + "\n" + a.title)
     if a.description != old_description: print("\n" + old_description + "\n" + a.description)
   #db.savenow()
