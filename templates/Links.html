@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="de">
+<head>
+<title>Wolfgang's Private News Feed</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<base target="_blank">
+<style>
+html {
+  font-size: 17px;
+  font-family: sans-serif;
+  line-height: 24px;
+}
+body {
+  background-color: #f5f5f6;
+  margin: 0;
+  margin-bottom: 41vh;
+}
+article {
+  background-color: #fffdfa;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 808px;
+  padding-bottom: 12px;
+}
+h1,h4,p {
+  margin: 0;
+  margin-left: 16px;
+  margin-right: 14px;
+}
+h1 {
+  padding-top: 17px;
+  font-size: 1.7em;
+  line-height: 1.15;
+  text-align: center;
+}
+h4 {
+  margin-bottom: 4px;
+  font-size: 1.1em;
+}
+p {
+  hyphens: auto;
+}
+hr {
+   color: lightgrey;
+}
+a {
+  text-decoration-line: none;
+}
+a:link {
+  color: black;
+}
+a:visited {
+  color: darkgrey;
+}
+a:hover,a:active,a:focus {
+  color: purple;
+}
+button {
+  font-size: 1em;
+  margin-left: 7px;
+  margin-right: 7px;
+}
+</style>
+<script>
+id_ms = {0:0,1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0,9:0}
+id = 0
+start = null
+function read(_id) {
+  id = _id
+  start = new Date()
+}
+function read_end() {
+  if (start) {
+    id_ms[id] += new Date() - start
+    start = null
+  }
+}
+window.onfocus = read_end
+function submit(next) {
+  s = ""
+  for (id in id_ms) {
+    if (s) s += ","
+    s += id + ":" + Math.round(id_ms[id] / 1000)
+  }
+  window.location.href = "/submit_Links/{category}?id_s={" + s + "}&next=" + next
+  for (x of document.getElementsByClassName("disable_after_submit")) {
+    x.disabled = true
+  }
+}
+</script>
+</head>
+<body>
+<article>
+
+<h1>Links in KI.de</h1>
+
+<hr>
+<a onclick="read(0)" href="https://the-decoder.de/google-deepmind-beginnt-an-autonomen-ki-agenten-zu-arbeiten/">
+ <h4>Google DeepMind beginnt an autonomen KI-Agenten zu arbeiten</h4>
+ <p>Google Deepmind wird in Kürze mit der Forschung an autonomen Sprachagenten wie Auto-GPT beginnen. Das könnte die Einsatzmöglichkeiten von Sprachmodellen wie Gemini erweitern.</p>
+</a>
+
+<hr>
+<a onclick="read(1)" href="https://the-decoder.de/open-source-sprachmodell-falcon-180b-soll-gpt-3-5-und-llama-2-uebertreffen/" target="_blank" rel="noreferrer">
+ <h4>Open-Source-Sprachmodell Falcon 180B soll GPT-3.5 und Llama 2 übertreffen</h4>
+ <p>Das Open-Source-Sprachmodell FalconLM soll eine bessere Performance als Metas LLaMA bieten und ist zudem kommerziell nutzbar. Allerdings werden ab einem Umsatz von einer Million US-Dollar Lizenzgebühren fällig.</p>
+</a>
+
+<hr>
+<a onclick="read(2)" href="https://the-decoder.de/ueber-70-sprachmodelle-bereits-auf-dem-chinesischen-markt-erhaeltlich/" target="_blank" rel="noreferrer">
+ <h4>Über 70 Sprachmodelle bereits auf dem chinesischen Markt erhältlich</h4>
+ <p>Laut Baidu-CEO Robin Li wurden in China bereits über 70 große Sprachmodelle mit mehr als einer Milliarde Parametern veröffentlicht.</p>
+</a>
+
+<hr>
+<a onclick="read(3)" href="https://the-decoder.de/anthropic-startet-chatgpt-konkurrent-claude-pro-fuer-20-pro-monat/" target="_blank" rel="noreferrer">
+ <h4>Anthropic startet ChatGPT-Konkurrent Claude Pro für $20 pro Monat</h4>
+ <p>Claude Pro ist Anthropics Antwort auf ChatGPT Plus. Es bietet eine umfassendere Nutzung und früheren Zugang zu neuen Funktionen.</p>
+</a>
+
+<hr>
+<a onclick="read(4)" href="https://the-decoder.de/google-stellt-neue-transparenzregel-fuer-ki-in-der-wahlwerbung-auf/" target="_blank" rel="noreferrer">
+ <h4>Google stellt neue Transparenzregel für KI in der Wahlwerbung auf</h4>
+ <p>Google bereitet sich mit einer neuen Kennzeichnungspflicht auf KI-generierte Inhalte in Wahlwerbung vor.</p>
+</a>
+
+<hr>
+<a onclick="read(5)" href="https://the-decoder.de/apple-investiert-taeglich-millionen-us-dollar-in-ki-training/" target="_blank" rel="noreferrer">
+ <h4>Apple investiert täglich Millionen US-Dollar in KI-Training - Bericht</h4>
+ <p>Apples Sprachmodell-Team ist mit 16 Personen eher klein, verfügt aber über ein großes Budget: Täglich sollen Millionen von Dollar in das KI-Training fließen.</p>
+</a>
+
+<hr>
+<a onclick="read(6)" href="https://the-decoder.de/chatgpt-ist-in-den-usa-wieder-auf-wachstumskurs/" target="_blank" rel="noreferrer">
+ <h4>ChatGPT ist in den USA wieder auf Wachstumskurs</h4>
+ <p>Der weltweite Traffic auf ChatGPT stabilisiert sich nach einem deutlichen Rückgang in den Sommermonaten. In den USA gibt es sogar ein leichtes Wachstum.</p>
+</a>
+
+<hr>
+<a onclick="read(7)" href="https://the-decoder.de/morgan-stanley-fuehrt-openai-chatbot-fuer-anlageberatung-ein/" target="_blank" rel="noreferrer">
+ <h4>Morgan Stanley führt OpenAI Chatbot für Anlageberatung ein</h4>
+ <p>Morgan Stanley führt nach einer Testphase einen OpenAI Chatbot ein, der die Beratung wohlhabender Kund:innen unterstützt.</p>
+</a>
+
+<hr>
+<a onclick="read(8)" href="https://the-decoder.de/microsoft-uebernimmt-fuer-ki-kunden-die-rechtskosten-bei-copyright-klagen/" target="_blank" rel="noreferrer">
+ <h4>Microsoft übernimmt für KI-Kunden die Rechtskosten bei Copyright-Klagen</h4>
+ <p>Gegen die generativen KI-Systeme von Google, Microsoft und OpenAI sind zahlreiche Urheberrechtsklagen anhängig. Im Falle einer Niederlage will Microsoft seine Kunden schützen.</p>
+</a>
+
+<hr>
+<a onclick="read(9)" href="https://the-decoder.de/nvidia-sieht-ki-markt-langfristig-bei-600-milliarden-us-dollar-und-sich-selbst-an-der-spitze/" target="_blank" rel="noreferrer">
+ <h4>Nvidia sieht KI-Markt langfristig bei 600 Milliarden US-Dollar - und sich selbst an der Spitze</h4>
+ <p>Nvidias große Wette auf KI scheint aufzugehen: Nvidia-Manager Manuvir Das sieht sein Unternehmen bei Hardware und Software für KI-Training und -Inferenz an der Spitze.</p>
+</a>
+
+</article>
+
+<p style="margin-top: 19px" align="center">
+ <button class="disable_after_submit" onclick="submit('index')">Mark as Read and<br>Back to Top</button>
+ <button class="disable_after_submit" onclick="submit('Links')">Mark as Read and<br>More Links in {category}</button>
+</p>
+
+</body>
+</html>

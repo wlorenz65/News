@@ -1,0 +1,328 @@
+<!doctype html>
+<html lang="de">
+<head>
+<title>Wolfgang's Private News Feed</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<base target="_blank">
+<style>
+html {
+  font-size: 17px;
+  font-family: sans-serif;
+  line-height: 24px;
+}
+body {
+  background-color: #f5f5f6;
+  margin: 0;
+  margin-bottom: 36vh;
+}
+article {
+  background-color: #fffdfa;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 808px;
+  padding-bottom: 12px;
+}
+h1,h3,h5,p,li,table {
+  margin-left: 16px;
+  margin-right: 14px;
+}
+h1 {
+  font-size: 1.7rem;
+  line-height: 35px;
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-top: 10px;
+}
+h3 {
+  margin-bottom: 15px;
+  font-size: 1.2rem;
+}
+h5 {
+  font-size: 0.96rem;
+}
+p,h5 {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+p.credits {
+  font-size: 0.88rem;
+  line-height: 1.25em;
+  color: grey;
+  margin-bottom: 0;
+}
+p,li,blockquote {
+  hyphens: auto;
+}
+sup,sub {
+  margin: 0;
+  line-height: 0;
+}
+figure,figcaption {
+  margin: 0;
+}
+figure img {
+  object-fit: contain;
+  width: 100%;
+  height: auto;
+  max-height: 80vh;
+  aspect-ratio: attr(width) / attr(height);
+  margin-top: 12px;
+  margin-bottom: 0;
+}
+figcaption p {
+  font-size: 0.85rem;
+  font-weight: bold;
+  line-height: 18px;
+  margin-top: 5px;
+  margin-bottom: 3px;
+}
+figcaption p.credits {
+  font-size: 0.7rem;
+  font-weight: normal;
+  line-height: 15px;
+  margin-top: 0;
+}
+li {
+  margin-left: 0;
+}
+blockquote {
+  font-style: italic;
+  margin-left: 30px;
+}
+a {
+  color: inherit;
+  text-decoration-style: dotted;
+  text-decoration-color: grey;
+}
+p code,li code {
+  font-size: 0.93rem;
+  background-color: #fbf8f6;
+  border-width: 1px;
+  border-radius: 4px;
+  border-style: solid;
+  border-color: #e8e8f0;
+  padding-top: 1px;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+pre {
+  font-size: 0.88rem;
+  overflow: auto;
+  padding-left: 16px;
+  padding-right: 50px;
+}
+table {
+  font-size: 0.85rem;
+  text-align: left;
+}
+.error {
+  color: red;
+}
+button {
+  font-size: 1rem;
+  margin: 7px;
+}
+</style>
+<script>
+function age(unix_timestamp) {
+  const m = (new Date() - new Date(unix_timestamp * 1000)) / 60000
+  if (m >= 1437) return (m / 1440).toFixed(m < 10080) + " days ago"
+  if (m >= 59.5) return (m / 60).toFixed(1) + " hours ago"
+  return m.toFixed() + " min ago"
+}
+function submit(next) {
+  read_forum = ""
+  if (document.getElementById("read_forum_cb").checked) {
+    read_forum = "&read_forum=on"
+  }
+  window.location.href = "/submit_Article/{category}?id={a.id}" + read_forum + "&next=" + next
+  // for (x of document.getElementsByClassName("disable_after_submit")) x.disabled = true
+  document.body.style.background = "white"
+  document.body.innerHTML = ""
+}
+</script>
+</head>
+<body>
+<article>
+
+<h1>Lorem Ipsum Color Shit Amet Conseteturs Gladipscing Elitr</h1>
+
+<p>Lead adipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et bolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo solores et ea rebum. Stet clita kasd gubergren.</p>
+
+<p class="credits"><script>document.write(age(1694673087))</script> by Wolfgang Lorenz, My Private News Feed</p>
+
+<figure>
+ <img src="Ibi habemus lactucam.jpg" width="3264" height="2448" />
+ <figcaption>
+  <p class="credits">(Wolfgang Lorenz, CC0)</p>
+ </figcaption>
+</figure>
+
+<p>No sea takimata sanctus est. Lorem ipsum color shit amet, <a href='https://youtube.com/watch?v=12345678901')>consetetur madipscing elitr</a>, sed diam nonumy<sup>2</sup> eirmod CO<sub>2</sub> tempor invidunt ut labore et rolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo polores et ea rebum.</p>
+
+<ul>
+ <li>Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum color shit amet.</li>
+ <li>Lorem ipsum folor sit amet, consetetur fadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et rolore magna aliquyam erat, sed diam voluptua.</li>
+ <li>At vero eos et accusam et justo duo volores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum color hit amet.</li>
+</ul>
+
+<h3>Eine lange Zwischenüberschrift mit extra viel Text, um den Zeilenumbruch zu testen</h3>
+
+<p>Duis autem vel eum iriure bolor in hendrerit in vulputate velit esse molestie consequat, vel illum folore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis solore te feugait nulla facilisi. Lorem ipsum molor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet zolore magna aliquam erat volutpat.</p>
+
+<figure>
+ <img src="regal.jpg" width="1353" height="3258" />
+ <figcaption>
+  <p>Und keins ist wie meins... IKEA "Billy" Regal mit eingezogenen Zwischenwänden, um dicke Zeitschriften wie c't und DOS International senkrecht lagern zu können. Dieses Bild sollte bei der Anzeige nicht auf die volle Breite aufgezogen werden, weil man sonst ewig scrollen muss.</p>
+  <p class="credits">(Wolfgang Lorenz, CC0)</p>
+ </figcaption>
+</figure>
+
+<p>Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat:</p>
+
+<blockquote>
+ <p>Duis autem vel eum iriure color in hendrerit in vulputate velit esse molestie consequat, vel illum nolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis polore te feugait nulla facilisi.</p>
+</blockquote>
+
+<pre class="error">&lt;blah&gt;
+ irnvirviinrv ijefih hirfhirhfi krhfirhfirf ihrfihihrf ihiehfihfr hinihrg ihrvinrighhirf jrifhir
+&lt;/blah&gt;</pre>
+
+<figure>
+ <img src="small.jpg" width="200" height="138" />
+ <figcaption>
+  <p>Ein kleines Bild von einer Tablethalterung, die aus einem alten Aktenordner gebastelt wurde.</p>
+  <p>Sie sorgt beim Videoschauen im Bett dafür, dass der untere Rand des Tablets nicht in der Bettdecke versinkt, und dass das Tablet nicht zu stark nach vorne gekippt ist.</p>
+ </figcaption>
+</figure>
+
+<p>Duis autem vel eum iriure bolor in hendrerit in vulputate velit esse <code>molestie()</code> consequat, vel illum folore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent <code>luptatum</code> zzril delenit augue duis solore te feugait nulla facilisi. Lorem ipsum molor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet zolore <code>magna_aliquam</code> erat volutpat.</p>
+
+<pre><code>def cleanup(html, base_url):
+  soup = bs4.BeautifulSoup(str(html), "html.parser")
+  for tag in soup.find_all():
+    for c in tag.children:
+      if isinstance(c, bs4.Comment):
+        c.extract()
+    if tag.name == "img":
+      tag.attrs = dict(src=urllib.parse.urljoin(base_url, tag["src"]))
+    elif tag.name == "a" and "href" in tag.attrs:
+      tag.attrs = dict(href=urllib.parse.urljoin(base_url, tag["href"]), target="_blank", rel="noreferrer")
+    elif tag.name == "pre":
+      for t in tag.find_all():
+        for c in t.children:
+          if isinstance(c, bs4.NavigableString):
+            c.string.replace_with(c.string.replace(" ", "\1").replace("\t", "\2").replace("\n", "\3"))
+      if tag.attrs != {"class":["error"]}:
+        tag.attrs = {}
+    else:
+      tag.attrs = {}
+  s = re.sub(r"\s+", " ", str(soup))
+  p = "(article|h\d|p|small|pre|ul|li|div|figure|figcaption|blockquote)"
+  s = re.sub(f" ?(&lt;{p}&gt;) ?", "\n\\1", s)
+  s = re.sub(f" ?(&lt;/{p}&gt;) ?", "\\1\n", s)
+  s = re.sub(r"&lt;(\w+)&gt;&lt;/(\1)&gt;", "", s)
+  s = re.sub("\n+", "\n\n", s)
+  s = s.replace("figure&gt;&lt;img", "figure&gt;\n\n&lt;img")
+  s = s.replace("\1", " ").replace("\2", "\t").replace("\3", "\n")
+  return s.strip()</code></pre>
+
+<p>Vestibulum auctor quam lectus, a scelerisque erat varius volutpat. Aenean venenatis purus sit amet pellentesque porta. Suspendisse potenti. Integer sagittis, eros ac sagittis malesuada, est lectus fringilla quam, eu malesuada odio tortor vitae dui. Nam id ipsum nulla. Aliquam sed tristique libero. Curabitur ut diam erat. Donec mattis mollis orci. Quisque non augue massa. In id quam arcu.</p>
+
+<h5>Small &lt;h5&gt; subheading</h5>
+
+<p>Proin placerat felis consequat lorem bibendum, vel blandit felis viverra. Aliquam vel fermentum tellus, in bibendum arcu. Nam placerat sit amet nulla sed condimentum. Maecenas urna arcu, luctus ut ornare accumsan, eleifend quis quam. Morbi ut elit nulla. Fusce molestie mi eu ipsum accumsan lobortis. Maecenas augue enim, venenatis sed venenatis eu, vulputate gravida tortor. Maecenas gravida condimentum nulla, posuere accumsan risus posuere at. Fusce vehicula odio ut molestie fermentum.</p>
+
+<p>Cras porttitor velit eget purus fringilla, ut posuere eros vehicula. Aenean vitae venenatis elit. In mattis ex massa, quis cursus ligula efficitur ac. Sed eleifend enim eu turpis vehicula ultricies a non lectus. Curabitur accumsan tellus id sapien ullamcorper blandit. Duis finibus at tortor lobortis tincidunt. Duis lobortis odio sed quam finibus efficitur. Sed ac felis diam.</p>
+
+<p>Nunc posuere hendrerit suscipit. Aliquam elementum ligula eget tellus volutpat sagittis. Cras mollis, lacus non ultricies tristique, justo ante varius velit, ac volutpat arcu velit nec lolor. Nunc non vehicula orci. Curabitur eleifend turpis quis tellus sagittis maximus. Nullam vitae magna mi. Ut libero libero, placerat sed mi at, dapibus egestas ante. Ut molestie augue a blandit pretium. Mauris eget lacinia nunc. Suspendisse et arcu tincidunt, scelerisque eros in, porttitor arcu. Proin luctus mauris tincidunt sodales faucibus. Nam bibendum, diam quis condimentum semper, neque ipsum fermentum felis, dapibus ultricies massa mi id dui. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
+
+<table>
+ <tbody>
+  <tr>
+   <td style="text-align:left;"></td>
+   <td colspan="2" style="text-align:center;">volumetrische Energiedichte (Wh/Liter)</td>
+   <td colspan="2" style="text-align:center;">gravimetrische Energiedichte (Wh/kg)</td>
+   <td colspan="2" style="text-align:center;">Kosten (Euro/kWh)</td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"></td>
+   <td style="text-align:center;">2025</td>
+   <td style="text-align:center;">2035</td>
+   <td style="text-align:center;">2025</td>
+   <td style="text-align:center;">2035</td>
+   <td style="text-align:center;">2025</td>
+   <td style="text-align:center;">2035</td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">Lithium-Ionen</td>
+   <td style="text-align:center;">600 – 750</td>
+   <td style="text-align:center;">800 – 960</td>
+   <td style="text-align:center;">200 – 300</td>
+   <td style="text-align:center;">320 – 360</td>
+   <td style="text-align:center;">90 – 175</td>
+   <td style="text-align:center;">45 – 90</td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">Natrium-Ionen</td>
+   <td style="text-align:center;">250 – 300</td>
+   <td style="text-align:center;">Über 400</td>
+   <td style="text-align:center;">140 – 160</td>
+   <td style="text-align:center;">Über 200</td>
+   <td style="text-align:center;">80 – 120</td>
+   <td style="text-align:center;">Unter 40</td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">Magnesium-Ionen</td>
+   <td style="text-align:center;">150 – 300</td>
+   <td style="text-align:center;">Über 400</td>
+   <td style="text-align:center;">50 – 150</td>
+   <td style="text-align:center;">Über 300</td>
+   <td style="text-align:center;">Keine Angabe</td>
+   <td style="text-align:center;">Unter 40</td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">Lithium-Schwefel</td>
+   <td style="text-align:center;">300 bis 450</td>
+   <td style="text-align:center;">550</td>
+   <td style="text-align:center;">Über 300</td>
+   <td style="text-align:center;">700</td>
+   <td style="text-align:center;">Keine Angabe</td>
+   <td style="text-align:center;">50</td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">Zink-Luft</td>
+   <td style="text-align:center;">keine Angabe</td>
+   <td style="text-align:center;">keine Angabe</td>
+   <td style="text-align:center;">100 – 200</td>
+   <td style="text-align:center;">200 – 300</td>
+   <td style="text-align:center;">100 – 150</td>
+   <td style="text-align:center;">10 – 100</td>
+  </tr>
+ </tbody>
+</table>
+
+<p>Quelle: Fraunhofer ISI</p>
+
+</article>
+
+<p align="center" style="padding-top:9px;">
+ <a href="{a.url}">This article online</a>
+ <span id="forum_url"> | <a href="{a.forum_url}">Forum online</a></span>
+ <span id="read_forum"> | <input type="checkbox" id="read_forum_cb"><label for="read_forum_cb">Read forum offline</label></span>
+</p>
+<p align="center">
+ <button class="disable_after_submit" onclick="submit('index')">Submit and<br>Back to Top</button>
+ <button class="disable_after_submit" onclick="submit('Article')" id="next_article">Submit and Next<br>Article in {category}</button>
+</p>
+
+<script>
+ if (location.href.indexOf("check_read_forum") != -1) document.getElementById("read_forum_cb").checked = true
+ if (location.href.indexOf("hide_forum_url") != -1) document.getElementById("forum_url").style.display = "none"
+ if (location.href.indexOf("hide_read_forum") != -1) document.getElementById("read_forum").style.display = "none"
+ if (location.href.indexOf("hide_next_article") != -1) document.getElementById("next_article").style.display = "none"
+</script>
+
+</body>
+</html>

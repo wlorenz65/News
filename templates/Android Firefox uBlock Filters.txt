@@ -1,0 +1,113 @@
+*##body,p,li,.text,.commtext,div.u-gap-small,.creator__label:style(font-size:17px!important; font-family:sans-serif!important; font-weight:400!important; line-height:24px!important; hyphens:auto!important)
+
+m.youtube.com##[data-content-type="related"]
+m.youtube.com##.item:has(.reel-shelf-header)
+
+techxplore.com##.comments-section.news-page-categories
+techxplore.com##.desc,.news-body:style(font-size:17px!important; line-height:18px!important)
+techxplore.com##.nav-main-top
+techxplore.com##.news-content-title:style(line-height:30px!important)
+techxplore.com##p,.desc,.news-body:style(margin-top:1em!important; margin-bottom:1em!important; padding:0!important)
+techxplore.com##.story-menu-container.sticky-container
+techxplore.com##.top-section
+
+the-decoder.de###amp-article-widget-2
+the-decoder.de##.amp-wp-article-footer
+the-decoder.de##.amp-wp-header
+the-decoder.de##.article-menu-wrapper
+the-decoder.de##.card__content__author
+the-decoder.de##.card--single-short.card--no-side.card--featured.card
+the-decoder.de##.gap-5.flex.summary-wrapper > div > .author-decoder
+the-decoder.de##.outbrain
+the-decoder.de##.single-feed-posts
+the-decoder.de##.site-footer
+the-decoder.de##.site-main__community-wrapper
+the-decoder.de##.summary-col1-wrapper > .decoder-donate
+the-decoder.de##.to-top
+
+www.derstandard.at##button.fab
+www.derstandard.at##ad-container
+www.derstandard.at##.ad-container-used
+www.derstandard.at##.js-article-tool
+www.derstandard.at###piano-supporter-inline-container
+www.derstandard.at##.visible-message
+www.derstandard.at##aside > div > div > div > div > figure
+||apps.derstandard.at/newsletters/subscribe/$subdocument
+||player.podigee-cdn.net/podcast-player/podigee-podcast-player.html$subdocument
+
+forum.golem.de##header
+forum.golem.de###screen > div:nth-of-type(1)
+forum.golem.de###screen:style(padding-top:10px!important)
+forum.golem.de##.teaser-widget
+www.golem.de##aside
+www.golem.de##.career-widget
+www.golem.de###grandwrapper > header
+www.golem.de###job-market
+www.golem.de##.media__teaser-list
+www.golem.de##.media-wrap > .social-tools
+www.golem.de##.nl-banner
+www.golem.de###screen:style(padding-top:1px!important)
+www.golem.de###seminars
+www.golem.de###tusplit1
+
+www.heise.de##.a-ad--content.a-ad
+www.heise.de##.a-ad--inread.a-ad
+www.heise.de##.a-article-teaser:has(.a-article-teaser__plus-icon)
+www.heise.de##.a-article-teaser:has-text(Die Bilder der Woche)
+www.heise.de##.a-article-teaser:has-text(die Fotonews der Woche)
+www.heise.de##.a-article-teaser:has-text(Die Highlights bei)
+www.heise.de##.a-article-teaser:has-text(Dienstag:)
+www.heise.de##.a-article-teaser:has-text(Donnerstag:)
+www.heise.de##.a-article-teaser:has-text(Freitag:)
+www.heise.de##.a-article-teaser:has-text(heise-Angebot)
+www.heise.de##.a-article-teaser:has-text(#heiseshow)
+www.heise.de##.a-article-teaser:has-text(Jetzt patchen!)
+www.heise.de##.a-article-teaser:has-text(Kurz informiert:)
+www.heise.de##.a-article-teaser:has-text(Mittwoch:)
+www.heise.de##.a-article-teaser:has-text(Montag:)
+www.heise.de##.a-article-teaser:has-text(Patchday:)
+www.heise.de##.a-article-teaser:has-text(Samstag:)
+www.heise.de##.a-article-teaser:has-text(software-architektur.tv:)
+www.heise.de##.a-article-teaser:has-text(Sonntag:)
+www.heise.de##.a-article-teaser:has-text(t Fotografie:)
+www.heise.de##.a-article-teaser:has-text(#TGIQF)
+www.heise.de##.a-article-teaser:has-text(t uplink)
+www.heise.de##.a-article-teaser:has-text(Weekly:)
+www.heise.de##.a-article-teaser__meta
+www.heise.de##.a-button--no-margin.a-button--muted.a-button
+www.heise.de##.a-caption__text,.a-caption__source:style(font-size:14px!important; line-height:18px!important)
+www.heise.de##a-collapse
+www.heise.de##a-img
+www.heise.de##.a-inline-textbox.js-dossier.a-u-hide-from-desktop.collapse-box
+www.heise.de##.articlebox
+www.heise.de##.article-image__gallery-container > a-img
+www.heise.de##.article-sidebar
+www.heise.de##.a-theme--techstage
+www.heise.de##.a-u-grid-pushin-mobile.a-u-grid-pullout-mobile.stage--channel.stage
+www.heise.de##.a-u-inline.a-inline-image
+www.heise.de##.bottom_up
+www.heise.de##.branding
+www.heise.de##code,pre:style(font-size:14.5px!important; line-height:20px!important)
+www.heise.de##.comment-button
+www.heise.de##div.a-u-inline
+www.heise.de##.footer
+www.heise.de##.inset-x-0
+www.heise.de##.list_bottom.terms
+www.heise.de##.login_button
+www.heise.de##.pvg-widget
+
+www.spiegel.de##div.sm\:min-h-400.sm\:mb-24
+www.spiegel.de##div.sm\:min-h-600.sm\:mb-24
+www.spiegel.de##.lg\:max-w-lg.md\:max-w-md.sm\:max-w-sm.mx-auto.lg\:px-8
+www.spiegel.de##.mb-px
+www.spiegel.de##body > .mt-8.z-10
+www.spiegel.de##.sticky
+www.spiegel.de##.sm\:mt-32.md\:mt-40.lg\:mt-40.sm\:px-16.md\:px-24.lg\:px-24.md\:mx-auto.lg\:mx-auto.md\:w-10\/12.lg\:w-10\/12
+www.spiegel.de##.w-full.sm\:pb-32.md\:pb-40.lg\:pb-40.sm\:pt-20.md\:pt-20.lg\:pt-20
+
+www.tagesschau.de##.copytext-element-wrapper--overlap
+
+www.merkur.de##.ecr-teaser-list-swipable
+
+www.tz.de##.id-StoryElement-inArticleReco
+

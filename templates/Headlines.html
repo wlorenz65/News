@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="de">
+<head>
+<title>Wolfgang's Private News Feed</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<base target="_blank">
+<style>
+html {
+  font-size: 17px;
+  font-family: sans-serif;
+  line-height: 24px;
+}
+body {
+  background-color: #f5f5f6;
+  margin: 0;
+  margin-bottom: 40vh;
+}
+article {
+  background-color: #fffdfa;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 808px;
+}
+h1 {
+  margin: 0;
+  margin-left: 16px;
+  margin-right: 14px;
+  padding-top: 17px;
+  padding-bottom: 8px;
+  font-size: 1.7em;
+  line-height: 1.15;
+  text-align: center;
+}
+table {
+  border-collapse: collapse;
+}
+tr {
+  border-top: solid;
+  border-width: thin;
+  border-color: grey;
+}
+th {
+  font-size: 2rem;
+  text-align: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 13px;
+  padding-right: 13px;
+  width: 1.4em
+}
+td {
+  width: auto;
+  padding: 10px;
+  padding-left: 0;
+  text-align: left;
+}
+td h4 {
+  margin-top: 0px;
+  margin-bottom: 3px;
+  font-size: 1.1em;
+  hyphens: auto;
+}
+td p {
+  margin-top: 0px;
+  margin-bottom: 3px;
+  hyphens: auto;
+}
+tr.ignore th:before {
+  content: " ";
+  color: lightgrey;
+}
+tr.ignore td {
+  color: black;
+}
+tr.read th:before {
+  content: "📄";
+}
+tr.read td {
+  color: darkgrey;
+}
+tr.block th:before {
+  content: "🚫";
+}
+tr.block td {
+  color: red;
+}
+button {
+  font-size: 1em;
+  margin-left: 7px;
+  margin-right: 7px;
+}
+</style>
+<script>
+
+function Dialog(html) {
+  d = document.querySelector("dialog")
+  if (!html.includes("<button")) html += '\n<form method="dialog"><p align="center"><button>Close</button></p></form>'
+  d.innerHTML = html
+  d.returnValue = ""
+  d.showModal()
+  return d
+}
+
+const xhr = new XMLHttpRequest()
+function pyCall(s) {
+  xhr.open("GET", "/" + s)
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState == XMLHttpRequest.DONE) {
+      r = xhr.responseText
+      if (r.match(/^\w+\(.*\)$/)) try {
+        return eval(r)
+      } catch (e) {
+        r = e.message
+      }
+      Dialog(r)
+    }
+  }
+  xhr.send()
+}
+
+function pyStr(s) {
+  if (!s) return "_"
+  if (s.includes("\n")) alert("\\n in pyStr(), Bottle can't handle that")
+  return encodeURIComponent(s).replaceAll("'", "%27")
+}
+
+function Headline_item(id, html) {
+  tr = document.getElementById(id)
+  if (tr) tr.outerHTML = html
+  else alert("Headline_item(id=" + id + ") not found")
+}
+
+function onClick() {
+  startNode = tr = event.target
+  while (tr.nodeName != "TR") {
+    if (tr.nodeName == "H4" || tr.nodeName == "P") startNode = tr
+    tr = tr.parentNode
+  }
+  pos = 0
+  function walk_childNodes(n) {
+    if (n == window.getSelection().focusNode) {
+      pos += window.getSelection().focusOffset
+      return true
+    }
+    if (n.nodeValue) pos += n.nodeValue.length
+    for (n of n.childNodes) {
+      if (walk_childNodes(n)) return true
+    }
+  }
+  walk_childNodes(startNode)
+  pyCall("click(id=" + tr.id + ",tag='" + startNode.tagName + "',pos=" + pos + ")")
+}
+
+var text, l, r, l_star, r_star, h3
+
+function select(dl, dr) {
+  alnum = /[\p{Letter}\d_]/u
+  if (dl < -1) {
+    while (l > 0 && !text.charAt(l - 1).match(alnum)) l -= 1
+    while (l > 0 && text.charAt(l - 1).match(alnum)) l -= 1
+  } else l = Math.min(Math.max(0, l + dl), r)
+  if (dr > +1) {
+    while (r < text.length && !text.charAt(r).match(alnum)) r += 1
+    while (r < text.length && text.charAt(r).match(alnum)) r += 1
+  } else r = Math.max(l, Math.min(r + dr, text.length))
+  h3.innerHTML = text.slice(Math.max(0, l - 10), l) + '<span style="background-color:teal;color:white">' + l_star + text.slice(l, r) + r_star + '</span>' + text.slice(r, Math.min(r + 10, text.length))
+}
+
+function star(d) {
+  if (d < 0) {
+    if (l_star != "*") l_star = "*"
+    else l_star = ""
+  } else {
+    if (r_star != "*") r_star = "*"
+    else r_star = ""
+  }
+  select(0, 0)
+}
+
+function block_dialog(id, Text, L, R, L_star, R_star, html) {
+  text = Text, l = L, r = R, l_star = L_star, r_star = R_star
+  dialog = Dialog(html)
+  h3 = dialog.querySelector("h3")
+  select(0, 0)
+  dialog.onclose = function() {
+    topic = dialog.returnValue
+    if (topic) {
+      if (r - l < 2) alert("Pattern is less than 2 characters")
+      else if (topic.startsWith("remove")) pyCall(topic)
+      else pyCall("block(id=" + id + ",pattern='" + pyStr(l_star + text.slice(l, r) + r_star) + "',topic='" + pyStr(topic) + "')")
+    }
+  }
+}
+
+function submit(next) {
+  table = document.querySelector("table")
+  ids = []
+  for (tr of table.rows) ids.push(tr.id)
+  location.href = "/submit_Headlines/{category}?ids=" + ids.join(",") + "&next=" + next
+  for (x of document.getElementsByClassName("disable_after_submit")) {
+    x.disabled = true
+  }
+}
+
+</script>
+</head>
+<body>
+<article>
+
+<h1>Headlines in {category}</h1>
+<table>
+
+<tr id="0" class="block"><th></th><td>
+ <h4>iPhone 15: Gerüchte über <s>lahme USB-Kabel</s> und Lieferverzögerungen</h4>
+ <p>Kommenden Monat stellt Apple seine iPhone-15-Baureihe vor. Nun sind neue Gerüchte aufgetaucht, die Hardware und Verfügbarkeit betreffen.</p>
+</td></tr>
+
+<tr id="1" class="block"><th></th><td>
+ <h4><s>Sicherheitsupdates</s>: IBM Security Guardium auf mehreren Wegen angreifbar</h4>
+ <p>IBM hat wichtige Sicherheitspatches für Security Guardium und Security Verify Access veröffentlicht.</p>
+</td></tr>
+
+<tr id="2" class="read"><th></th><td>
+ <h4>Elektroautos: Renault-Chef rechnet mit sinkenden Kosten​</h4>
+</td></tr>
+
+<tr id="3" class="read"><th></th><td>
+ <h4>Windows-Update-Vorschau: Möglicher Boot-Abbruch wegen nicht unterstützter CPU</h4>
+ <p>Nach der Installation der Windows-Update-Vorschauen kann es zum Abbruch des Bootvorgangs mit einer Fehlermeldung bezüglich der CPU kommen.</p>
+</td></tr>
+
+<tr id="4" class="ignore"><th></th><td>
+ <h4>Nach Zweckentfremdung: Dropbox begrenzt bislang unbegrenztes Speichervolumen</h4>
+ <p>Weil ein kleiner Teil der Kundschaft den unbegrenzten Speicherplatz von "Dropbox Advanced" zweckentfremdet haben, begrenzt der Dienst das Abo nun für alle.</p>
+</td></tr>
+
+</table>
+</article>
+
+<dialog>
+ <form method="dialog">
+ </form>
+</dialog>
+
+<p style="margin-top: 19px" align="center">
+ <button class="disable_after_submit" onclick="submit('index')">Submit and<br>Back to Top</button>
+ <button class="disable_after_submit" onclick="submit('Headlines')">Submit and More<br>Headlines in {category}</button>
+</p>
+
+</body>
+</html>

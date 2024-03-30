@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="de">
+<head>
+<title>Wolfgang's Private News Feed</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--refresh-->
+<style>
+html {
+  font-size: 17px;
+  font-family: sans-serif;
+}
+body {
+  background-color: #f5f5f6;
+  margin: 0;
+  margin-bottom: 50vh;
+}
+article {
+  background-color: #fffdfa;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 808px;
+  padding-bottom: 12px;
+}
+h1 {
+  margin-top: 0;
+  padding-top: 17px;
+  font-size: 1.7em;
+  text-align: center;
+}
+h3,p {
+  margin-top: 7px;
+  margin-bottom: 7px;
+  margin-left: 16px;
+  margin-right: 14px;
+  text-align: center;
+}
+h3 {
+  font-size: 1rem;
+  margin-top: 14px;
+}
+p {
+  font-size: 0.9rem;
+}
+table {
+  margin: auto;
+  border-collapse: collapse;
+  font-size: 1rem;
+  margin-bottom: 15px;
+}
+tr {
+  border-bottom: 1px solid;
+}
+tr.head {
+  font-weight: bold;
+}
+td {
+  height: 2.1rem;
+  padding-left: 20px;
+  padding-right: 20px;
+  text-align: center;
+}
+button {
+  font-size: 1rem;
+}
+pre {
+  overflow: auto;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: 0;
+  margin-right: 0;
+  padding-left: 16px;
+  padding-right: 32px;
+  font-size: 0.9em;
+  max-height: 30vh;
+}
+.error {
+   color: red;
+}
+</style>
+</head>
+<body>
+<article>
+<h1>Wolfgang's Private News Feed</h1>
+<table>
+<tr class="head"><td>Links</td><td>Category</td><td>Articles</td><td>Forums</td><td>Headlines</tr></th>
+<tr><td><a href='Links/KI.de'><button>10</button></a></td><td>KI.de</td><td>-</td><td>-</td><td>-</td></tr>
+<tr><td>-</td><td>AI.en</td><td>-</td><td>-</td><td>-</td></tr>
+<tr><td><a href='Links/Computer'><button>96</button></a></td><td>Computer</td><td>-</td><td>-</td><td>-</td></tr>
+<tr><td>-</td><td>Other</td><td>-</td><td>-</td><td><a href='Headlines/Other'><button>165</button></a></td></tr>
+</table>
+<!--buttons-->
+<p>
+<a href="/Update"><button>Update</button></a>
+</p>
+<!--/buttons-->
+<!--errors-->
+<h3>Last of 1 new errors in file "DEBUG errors.log":</h3>
+<pre class="error">Traceback (most recent call last):
+  File "/usr/lib/python3.10/sre_parse.py", line 1051, in parse_template
+    this = chr(ESCAPES[this][1])
+KeyError: '\\w'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/wlorenz65/Desktop/Heise.py", line 157, in <module>
+    style_article(a)
+  File "/home/wlorenz65/Desktop/GLOBALS.py", line 148, in style_article
+    a.html = re.sub("(?s)&lt;article&gt;.*&lt/article&gt", a.html, style)</pre>
+<!--/errors-->
+<!--progress-->
+<h3>Progress:</h3>
+<p>Heise.read_article(url='https://www.heise.de/news/Malware-Whiffy-Recon-spioniert-Ort-des-infizierten-Geraets-aus-9286754.html')</p>
+<p>sub File "/storage/emulated/0/qpython/Desktop/online.py", line 50, in Update</p>
+<!--/progress-->
+</article>
+</body>
+</html>
