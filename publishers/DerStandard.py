@@ -51,24 +51,49 @@ def read_article(a):
   for x in article.find_all("aside"): x.decompose()
   for x in article.find_all("nav"): x.decompose()
   for x in article.find_all("div", {"data-section-type":"newsletter"}): x.decompose()
-
-  for figure in article.find_all("figure", {"data-type":"image"}):
-    out = f'<figure>\n<img src="{figure.img["src"]}"/>\n'
-    caption = figure.figcaption
-    caption.name = "p"
-    out += f'<figcaption>\n{caption}\n'
-    credits = figure.footer
-    credits.name = "p"
-    credits.attrs = {"class":"credits"}
-    out += f'{credits}\n</figcaption>\n'
-    figure.replace_with(bs4.BeautifulSoup(out, "html.parser"))
-
   for x in article.find_all("script", "js-embed-template"):
     x.replace_with(bs4.BeautifulSoup(html_.unescape(x.text), "html.parser"))
+
+  for figure in article.find_all("figure", {"data-type":"image"}):
+    img = figure.img
+    src = img.get("src") or img.get("data-lazy-src") or img.get("data-fullscreen-src")
+    out = f'<figure>\n<img src="{src}"/>\n'
+    caption = figure.figcaption
+    credits = figure.footer
+    if caption or credits:
+      out += "<figcaption>\n"
+      if caption:
+        caption.name = "p"
+        out += str(caption) + "\n"
+      if credits:
+        credits.name = "p"
+        credits.attrs = {"class":"credits"}
+        out += str(credits) + "\n"
+      out += "</figcaption>\n"
+    out += "</figure>\n"
+    figure.replace_with(bs4.BeautifulSoup(out, "html.parser"))
+
+  for video in article.find_all("div", {"data-section-type":"video"}):
+    iframe = video.iframe
+    if iframe:
+      caption = video.figcaption
+      if caption: caption.name = "p"
+      credits = video.footer
+      if credits: credits.name, credits.attrs = "p", {"class":"credits"}
+      src = iframe.get("src", "")
+      if "youtube.com" in src:
+        video_id = re.search(r"/embed/([a-zA-Z0-9_-]{11})\b", src).group(1)
+        video.replace_with(embed_youtube(video_id, caption, credits))
+
   for x in article.find_all("div", "js-embed-container"): x.unwrap()
   for x in article.find_all("figure", {"data-type":"html"}): x.unwrap()
   for x in article.find_all("div", {"data-section-type":"html"}): x.unwrap()
   for x in article.find_all("script", {"src":"https://platform.twitter.com/widgets.js"}): x.decompose()
+  for x in article.find_all("script", {"class":"podigee-podcast-player"}): x.decompose()
+  for x in article.find_all("iframe"):
+    if "open.spotify.com" in x.get("src", ""): x.decompose()
+  for x in article.find_all("div", {"data-section-type":"quote"}): x.unwrap()
+  for x in article.find_all("figure", {"data-type":"quote"}): x.unwrap()
 
   show_source_of_unknown_tags(article, soup)
   a.html = cleanup(article, a.url)
@@ -92,7 +117,7 @@ def read_article(a):
   logo()
 
 if DEBUG: # read_article()
-  url = "https://www.derstandard.at/story/3000000208222/audienz-bei-der-waldkoenigin-der-schweizer-alpen"
+  url = "https://www.derstandard.at/story/3000000212076/bei-den-kolibris-in-der-karibik"
   a = Article(url=url, pubdate=int(time.time()))
   g.cache_urls = True
   read_article(a)

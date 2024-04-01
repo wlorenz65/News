@@ -29,6 +29,7 @@ def read_article(a):
     a.url = "https://archive.li/newest/" + a.url
   a.column = "Links"
 
+#paywall nicht erkannt: https://www.zeit.de/2024/10/menschenaffen-emotionen-gefuehle-weinen-primatenforschung
 #https://www.zeit.de/digital/2024-01/ces-2024-tech-messe-usa-innovationen
 
 if DEBUG: # read_article()

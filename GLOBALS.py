@@ -1,4 +1,4 @@
-import types, threading, urllib.request, urllib.parse, bs4, io, re, os, time, pickle, math, html as html_
+import types, threading, urllib.request, urllib.parse, bs4, io, re, os, time, pickle, json, math, html as html_
 
 DEBUG = (__name__ == "__main__")
 nDEBUG = False
@@ -64,6 +64,8 @@ class Article(Data):
   lang = "de"
   category = "Andere"
   column = "Headlines"
+  description = ""
+  blocked = {} # dangerous
 
   @property
   def text(a):
@@ -364,27 +366,35 @@ if nDEBUG: # download_images_and_store_article(a)
   logo()
   exit()
 
-def embed_youtube(v):
-  log(f'embed_youtube("{v}")')
-  a = "https://www.youtube.com/watch?v=" + v
-  url = "https://www.youtube.com/oembed?url=" + a
+def embed_youtube(video_id, caption="", credits=""):
+  caption = re.sub(r"\s+", " ", str(caption)).strip()
+  credits = re.sub(r"\s+", " ", str(credits)).strip()
+  log(f'embed_youtube({video_id=}, {caption=}, {credits=})')
+  video_url = "https://www.youtube.com/watch?v=" + video_id
+  oembed_url = "https://www.youtube.com/oembed?url=" + video_url
   try:
-    with urllib.request.urlopen(url) as f: info = eval(f.read().decode("utf-8"))
+    with urllib.request.urlopen(oembed_url) as f: info = json.loads(f.read())
+    if not caption: caption = f'<p>Video: {info["title"]}</p>'
+    if video_url not in caption: caption += f'\n<p><a href="{video_url}">{video_url}</a></p>'
+    if not credits: credits = f'<p class="credits">{info["author_name"]}</p>'
     out = f"""
       <figure>
       <img src="{info["thumbnail_url"]}"/>
       <figcaption>
-      <p>Video: {info["title"]}</p>
-      <p><a href="{a}">{a}</a></p>
+      {caption}
+      {credits}
       </figcaption>
       </figure>
     """
   except Exception:
-    out = f'<pre class="error">Video not available: <a href="{a}">{a}</a></pre>'
+    out = f'<pre class="error">Video not available: <a href="{video_url}">{video_url}</a></pre>'
   return(bs4.BeautifulSoup(out, "html.parser"))
 
-if nDEBUG: # embed_youtube()
-  print(embed_youtube("R4nc-lr6JI"))
+if DEBUG: # embed_youtube()
+  video_id = "YD_DoKo5Dg8"
+  caption = "<p>The Latest Top 10 Is...Sh*t<br/>Hier analysiert der Musiker und Youtuber Rick Beato die Top 10 der Spotify-Charts aus musikalischer Sicht.</p>"
+  credits = '<p class="credits">Rick Beato</p>'
+  print(embed_youtube(video_id, caption, credits))
   exit()
 
 def embed_vimeo(v):

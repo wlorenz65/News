@@ -1,6 +1,6 @@
 from GLOBALS import *; DEBUG = (__name__ == "__main__")
-log(f"len(db.articles) = {len(db.articles)}")
-log(f"len(db.block_patterns_and_topics) = {len(db.block_patterns_and_topics)}")
+log(f"len(db.articles)={len(db.articles)}") # QPython only 3.6, no =
+log(f"len(db.block_patterns_and_topics)={len(db.block_patterns_and_topics)}")
 
 # ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
 # Move DerStandard links to article
@@ -20,7 +20,7 @@ if nDEBUG:
   for a in db.articles.copy():
     if a.column == "Headlines":
       a.update_blocked(True)
-      if a.blocked and (len(a.blocked) >= 3 or max(a.blocked.values()) >= 2):
+      if len(a.blocked) >= 3 or max(a.blocked.values()) >= 2:
         log(a)
         g.to_archive.append(a)
         db.articles.remove(a)
