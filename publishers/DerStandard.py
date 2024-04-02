@@ -116,6 +116,9 @@ def read_article(a):
 
   logo()
 
+# doppelte autorennamen: https://www.derstandard.at/story/3000000213355/falschinformationen-zum-dritten-weltkrieg-tiktok
+# leerzeichen im datum: https://www.derstandard.at/story/3000000213987/putin-ordnet-russische-variante-von-steam-an
+
 if DEBUG: # read_article()
   url = "https://www.derstandard.at/story/3000000212076/bei-den-kolibris-in-der-karibik"
   a = Article(url=url, pubdate=int(time.time()))

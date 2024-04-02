@@ -30,6 +30,7 @@ def read_article(a):
   a.column = "Links"
 
 #paywall nicht erkannt: https://www.zeit.de/2024/10/menschenaffen-emotionen-gefuehle-weinen-primatenforschung
+#paywall nicht erkannt: https://www.zeit.de/2024/10/martinshorn-erfinder-feuerwehr-alarm
 #https://www.zeit.de/digital/2024-01/ces-2024-tech-messe-usa-innovationen
 
 if DEBUG: # read_article()
