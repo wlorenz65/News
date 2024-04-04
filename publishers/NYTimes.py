@@ -1,14 +1,5 @@
 from GLOBALS import *; DEBUG = (__name__ == "__main__")
 
-if nDEBUG: # runs on Linux but fails on Termux
-  tstr = 'Sun, 31 Mar 2024 02:14:34 +0000' # German DST switching hour
-  print(f"{tstr=}")
-  tstruct = time.strptime(tstr, "%a, %d %b %Y %H:%M:%S %z")
-  print(f"{tstruct=}")
-  tstamp = int(time.mktime(tstruct)) # OverflowError: mktime argument out of range
-  print(f"{tstamp=}")
-  exit()
-
 def read_headlines():
   logi("NYTimes.read_headlines()")
   articles = []
@@ -22,13 +13,7 @@ def read_headlines():
       a.title = i.title.text
       a.description = i.description.text if i.description else ""
       a.url = i.url.text # online.py translates with Google instead of using "https://archive.li/newest/" + i.url.text here
-      try:
-        a.pubdate = int(time.mktime(time.strptime(i.pubdate.text, "%a, %d %b %Y %H:%M:%S %z")))
-      except:
-        log(f"{i.pubdate.text=}")
-        log(f'{time.strptime(i.pubdate.text, "%a, %d %b %Y %H:%M:%S %z")=}')
-        loge()
-        a.pubdate = time.time()
+      a.pubdate = timestamp(i.pubdate.text)
       articles.append(a)
   logo()
   return articles

@@ -11,7 +11,7 @@ def read_headlines():
     a.title = i.title.text
     a.description = re.search(r"<p>(.+?)</p>", i.description.text).group(1).replace(" [&#8230;]", "…")
     a.url = i.url.text
-    a.pubdate = int(time.mktime(time.strptime(i.pubdate.text, "%a, %d %b %Y %H:%M:%S %z")))
+    a.pubdate = timestamp(i.pubdate.text)
     articles.append(a)
   return articles
 

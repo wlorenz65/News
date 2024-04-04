@@ -12,7 +12,7 @@ def read_headlines():
     a.description = i.description.text
     a.url = i.url.text
     t = i.pubdate.text.replace("EST", "-0500").replace("EDT", "-0400")
-    a.pubdate = int(time.mktime(time.strptime(t, "%a, %d %b %Y %H:%M:%S %z")))
+    a.pubdate = timestamp(t)
     if i.category.text == "Machine learning & AI": a.category = "AI.en"; a.read = True
     articles.append(a)
   return articles

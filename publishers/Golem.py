@@ -11,7 +11,7 @@ def read_headlines():
     a.title = i.title.text
     a.description = add_punctuation(re.sub(r" \(<a .*", "", i.description.text))
     a.url = i.url.text
-    a.pubdate = int(time.mktime(time.strptime(i.pubdate.text, "%a, %d %b %Y %H:%M:%S %z")))
+    a.pubdate = timestamp(i.pubdate.text)
     articles.append(a)
   return articles
 
@@ -34,7 +34,10 @@ def read_article(a):
     if next_page: next_page = urllib.parse.urljoin(page, next_page["href"])
 
     if not out:
-      authors = article.find("span", {"class":"authors__name"}).text + ", Golem.de"
+      authors = []
+      an = article.find("span", {"class":"authors__name"})
+      if an: authors.append(an.text)
+      authors.append("Golem.de")
       f = soup.find("section", {"id":"comments"})
       if f: a.forum_url = f.a["href"]
     else:
@@ -115,12 +118,12 @@ def read_article(a):
     out += cleanup(article, a.url)
     page = next_page
   out = out.replace("\n</article><article>\n", "")
-  aa = f'</p>\n\n<p class="credits"><script>document.write(age({a.pubdate}))</script> by {authors}</p>'
+  aa = f'</p>\n\n<p class="credits"><script>document.write(age({a.pubdate}))</script> by {", ".join(authors)}</p>'
   a.html = out.replace("</p>", aa, 1)
   logo()
 
 if DEBUG: # read_article()
-  url = "https://www.golem.de/news/mintboard-bastler-baut-bluetooth-tastatur-in-bonbondose-2402-181881.html"
+  url = "https://www.golem.de/news/anzeige-dieses-balkonkraftwerk-ist-kurz-doppelt-reduziert-2404-183790.html"
   a = Article(url=url, category="Computer", pubdate=int(time.time()))
   g.cache_urls = True
   read_article(a)

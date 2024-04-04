@@ -1,4 +1,4 @@
-import types, threading, urllib.request, urllib.parse, bs4, io, re, os, time, pickle, json, math, html as html_
+import types, threading, urllib.request, urllib.parse, bs4, io, re, os, time, datetime, pickle, json, math, html as html_
 
 DEBUG = (__name__ == "__main__")
 nDEBUG = False
@@ -205,6 +205,11 @@ def article(id):
   id = int(id)
   for a in db.articles:
     if a.id == id: return a
+
+def timestamp(pubdate, format="%a, %d %b %Y %H:%M:%S %z"):
+  dt = datetime.datetime.strptime(pubdate, format)
+  ts = datetime.datetime.timestamp(dt)
+  return int(ts)
 
 def add_punctuation(s, char="."):
   s = s.strip()

@@ -15,7 +15,7 @@ def read_headlines():
     d = re.sub(r".* \d+ Bilder \d+ Bilder ", "", d)
     a.description = d
     a.url = i.url.text
-    a.pubdate = int(time.mktime(time.strptime(i.pubdate.text, "%a, %d %b %Y %H:%M:%S %z")))
+    a.pubdate = timestamp(i.pubdate.text)
     if not a.title.endswith(("(Heise Online)", "(derStandard)", "(Spiegel)", "(FAZ)")):
       articles.append(a)
   return articles

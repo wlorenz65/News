@@ -11,7 +11,7 @@ def read_headlines():
     a.title = i.title.text
     a.description = re.sub(r" Von [\w .-]{3,40}\.$", "", i.description.text)
     a.url = i.url.text
-    a.pubdate = int(time.mktime(time.strptime(i.pubdate.text, "%a, %d %b %Y %H:%M:%S %z")))
+    a.pubdate = timestamp(i.pubdate.text)
     if a.title.startswith("Liveblog"): a.title += " (Ticker)"
     articles.append(a)
   return articles

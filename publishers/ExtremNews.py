@@ -12,7 +12,7 @@ def read_headlines():
     a.title = i.title.text
     a.description = i.summary.text
     a.url = re.sub(r"\?.*", "", i.link["href"])
-    a.pubdate = int(time.mktime(time.strptime(i.published.text, "%Y-%m-%dT%H:%M:%SZ")))
+    a.pubdate = timestamp(i.published.text, "%Y-%m-%dT%H:%M:%SZ")
     articles.append(a)
   return articles
 

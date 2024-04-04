@@ -11,7 +11,7 @@ def read_headlines():
     a.title = i.title.text
     a.description = i.description.text
     a.url = i.url.text
-    a.pubdate = int(time.mktime(time.strptime(i.pubdate.text, "%a, %d %b %Y %H:%M:%S %z")))
+    a.pubdate = timestamp(i.pubdate.text)
     articles.append(a)
   return articles
 
@@ -29,15 +29,17 @@ def read_article(a):
     a.url = "https://archive.li/newest/" + a.url
   a.column = "Links"
 
-#paywall nicht erkannt: https://www.zeit.de/2024/10/menschenaffen-emotionen-gefuehle-weinen-primatenforschung
-#paywall nicht erkannt: https://www.zeit.de/2024/10/martinshorn-erfinder-feuerwehr-alarm
-#https://www.zeit.de/digital/2024-01/ces-2024-tech-messe-usa-innovationen
+# paywall nicht erkannt: https://www.zeit.de/2024/10/menschenaffen-emotionen-gefuehle-weinen-primatenforschung
+# paywall nicht erkannt: https://www.zeit.de/2024/10/martinshorn-erfinder-feuerwehr-alarm
+# paywall nicht erkannt: https://www.zeit.de/2024/14/cannabis-legalisierung-plantage-relzow
+# paywall nicht erkannt: https://www.zeit.de/gesellschaft/schule/2024-03/schulversuche-pisa-studie-grundschule-reform
+# https://www.zeit.de/2024/14/erinnerung-kleinkinder-kindheit-gedaechtnis
+
+# keine paywall: https://www.zeit.de/digital/2024-01/ces-2024-tech-messe-usa-innovationen
 
 if DEBUG: # read_article()
-  url = "https://www.zeit.de/zeit-magazin/mode-design/2024-01/homewear-bequemlichkeit-stil"
-  url = "https://www.zeit.de/wissen/2024-01/putzmittel-selber-machen-hausmittel-chemie-zitronensaeure-essig"
   url = "https://www.zeit.de/digital/mobil/2024-01/playstation-portal-remote-player-test"
-  a = Article(url=url, category="Andere", pubdate=int(time.time()), id=0)
+  a = Article(url=url, pubdate=int(time.time()), id=0)
   g.cache_urls = True
   read_article(a)
   log(a.url)

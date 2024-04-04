@@ -14,7 +14,7 @@ def read_headlines():
       a.title = i.title.text
       a.description = add_punctuation(re.sub(r".*>", "", i.description.text), ".")
       a.url = re.sub(r"\?.*", "", i.url.text)
-      a.pubdate = int(time.mktime(time.strptime(i.pubdate.text, "%a, %d %b %Y %H:%M:%S Z")))
+      a.pubdate = timestamp(i.pubdate.text)
       a.column = "Article" if web else "Headlines"
       if "/jetzt/livebericht/" in a.url: a.title += " (Ticker)"
       if a.url not in urls:
@@ -37,7 +37,7 @@ def read_article(a):
   authors = []
   ao = article.find("div", class_="article-origins")
   if ao:
-    for _ in ao.find("span"): authors.append(ao.text.strip())
+    for s in ao.find_all("span"): authors.append(s.text.strip())
   authors.append("DerStandard.at")
 
   for x in article.find_all("div"):
@@ -118,10 +118,11 @@ def read_article(a):
 
 # doppelte autorennamen: https://www.derstandard.at/story/3000000213355/falschinformationen-zum-dritten-weltkrieg-tiktok
 # leerzeichen im datum: https://www.derstandard.at/story/3000000213987/putin-ordnet-russische-variante-von-steam-an
+# dailymotion video: https://www.derstandard.at/story/3000000214097/grenznahe-kontrollen-nach-cannabislegalisierung-in-deutschland
 
 if DEBUG: # read_article()
-  url = "https://www.derstandard.at/story/3000000212076/bei-den-kolibris-in-der-karibik"
-  a = Article(url=url, pubdate=int(time.time()))
+  url = "https://www.derstandard.at/story/3000000213355/falschinformationen-zum-dritten-weltkrieg-tiktok"
+  a = Article(url=url, pubdate=int(time.time()), id=0)
   g.cache_urls = True
   read_article(a)
   logi()

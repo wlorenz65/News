@@ -13,7 +13,7 @@ def read_headlines():
     p = a.description.rfind(".")
     if p != -1: a.description = a.description[:p + 1]
     a.url = i.url.text
-    a.pubdate = int(time.mktime(time.strptime(i.pubdate.text, "%a, %d %b %Y %H:%M:%S %z")))
+    a.pubdate = timestamp(i.pubdate.text)
     for c in i.find_all("category"):
       c = c.get_text().lower()
       if "artificial intelligence" in c: a.category = "AI.en"; a.read = True

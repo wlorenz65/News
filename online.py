@@ -50,7 +50,7 @@ def read_new_headlines():
           db.articles.append(a)
         db.known_urls[a.url] = time.time()
     except: loge()
-  with open("DEBUG read_new_headlines.log", "w") as f: f.write("\n".join(dbg))
+  #with open("DEBUG read_new_headlines.log", "w") as f: f.write("\n".join(dbg))
 
 def cleanup(a):
   def norm_chars(t):

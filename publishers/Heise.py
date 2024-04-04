@@ -11,7 +11,7 @@ def read_headlines():
     a.title = i.title.text.replace("\u200b", " ").strip()
     a.description = i.description.text.replace("\u200b", " ").strip()
     a.url = re.sub(r"\?.*", "", i.url.text)
-    a.pubdate = int(time.mktime(time.strptime(i.pubdate.text, "%a, %d %b %Y %H:%M:%S %z")))
+    a.pubdate = timestamp(i.pubdate.text)
     if a.title.startswith("heise+ | "): a.url = "https://archive.li/newest/" + a.url
     if not a.url.startswith("https://www.heise.de/") or "/download/" in a.url: a.column = "Links"
     articles.append(a)

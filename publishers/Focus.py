@@ -11,7 +11,7 @@ def read_headlines():
     a.title = i.title.text
     a.description = re.sub(r"\bVon FOCUS\b.*", "", i.description.text.strip()) if i.description else ""
     a.url = i.url.text
-    a.pubdate = int(time.mktime(time.strptime(i.pubdate.text.strip(), "%a, %d %b %Y %H:%M:%S %z")))
+    a.pubdate = timestamp(i.pubdate.text.strip())
     if "/deals/" in a.url: a.title += " (Werbung)"
     articles.append(a)
   return articles

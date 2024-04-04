@@ -11,7 +11,7 @@ def read_headlines():
     a.title = i.title.text
     a.description = i.description.text
     a.url = i.url.text
-    a.pubdate = int(time.mktime(time.strptime(i.pubdate.text, "%a, %d %b %Y %H:%M:%S GMT")))
+    a.pubdate = timestamp(i.pubdate.text, "%a, %d %b %Y %H:%M:%S GMT")
     if "/video" in a.url or "/mediathek/" in a.url: a.title += " (Video)"
     if "/plus" in a.url: a.url = "https://archive.li/newest/" + a.url
     articles.append(a)
