@@ -10,18 +10,19 @@ def read_headlines():
     a = Article(publisher="Zeit")
     a.title = i.title.text
     a.description = i.description.text
-    a.url = i.url.text
+    a.url = "https://archive.li/newest/" + i.url.text
     a.pubdate = timestamp(i.pubdate.text)
     articles.append(a)
   return articles
 
-if DEBUG: # read_headlines()
+if nDEBUG: # read_headlines()
   for a in read_headlines():
     logi(a)
     log(f"age = {(time.time() - a.pubdate) / 3600 :.0f} hrs")
     logo()
   exit()
 
+"""
 def read_article(a):
   log(f"Zeit.read_article({a})")
   soup = url_to_soup(a.url)
@@ -29,20 +30,24 @@ def read_article(a):
     a.url = "https://archive.li/newest/" + a.url
   a.column = "Links"
 
-# paywall nicht erkannt: https://www.zeit.de/2024/10/menschenaffen-emotionen-gefuehle-weinen-primatenforschung
-# paywall nicht erkannt: https://www.zeit.de/2024/10/martinshorn-erfinder-feuerwehr-alarm
-# paywall nicht erkannt: https://www.zeit.de/2024/14/cannabis-legalisierung-plantage-relzow
-# paywall nicht erkannt: https://www.zeit.de/gesellschaft/schule/2024-03/schulversuche-pisa-studie-grundschule-reform
+# registerwall nicht erkannt:
+# https://www.zeit.de/2024/10/menschenaffen-emotionen-gefuehle-weinen-primatenforschung
+# https://www.zeit.de/2024/10/martinshorn-erfinder-feuerwehr-alarm
+# https://www.zeit.de/2024/14/cannabis-legalisierung-plantage-relzow
+# https://www.zeit.de/gesellschaft/schule/2024-03/schulversuche-pisa-studie-grundschule-reform
 # https://www.zeit.de/2024/14/erinnerung-kleinkinder-kindheit-gedaechtnis
+# https://www.zeit.de/2024/13/kuechenschraenke-trend-farben-preis
 
-# keine paywall: https://www.zeit.de/digital/2024-01/ces-2024-tech-messe-usa-innovationen
+# keine paywall:
+# https://www.zeit.de/digital/2024-01/ces-2024-tech-messe-usa-innovationen
 
 if DEBUG: # read_article()
-  url = "https://www.zeit.de/digital/mobil/2024-01/playstation-portal-remote-player-test"
+  url = "https://www.zeit.de/2024/10/menschenaffen-emotionen-gefuehle-weinen-primatenforschung"
   a = Article(url=url, pubdate=int(time.time()), id=0)
   g.cache_urls = True
   read_article(a)
   log(a.url)
   exit()
+"""
 
-publishers["Zeit"] = Publisher(read_headlines=read_headlines, read_article=read_article)
+publishers["Zeit"] = Publisher(read_headlines=read_headlines)
