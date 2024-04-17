@@ -31,9 +31,11 @@ def read_article(a):
     a.url = "https://archive.li/newest/" + a.url
   a.column = "Links"
 
-#das ist paywall und wird nicht erkannt https://www.faz.net/aktuell/rhein-main/region-und-hessen/wie-ein-blackout-die-landwirtschaft-gefaehrden-wuerde-19546412.html
-#https://m.faz.net/aktuell/wirtschaft/unternehmen/weltwirtschaftsforum-ki-ist-in-davos-nachmieter-der-russen-19452071.html
-#https://m.faz.net/aktuell/wirtschaft/kuenstliche-intelligenz/ki-revolution-ohne-europa-weltwirtschaftsforum-in-davos-zeigt-realitaet-19454178.html
+#das ist paywall und wird nicht erkannt
+#https://www.faz.net/aktuell/rhein-main/region-und-hessen/wie-ein-blackout-die-landwirtschaft-gefaehrden-wuerde-19546412.html
+# https://m.faz.net/aktuell/wirtschaft/unternehmen/weltwirtschaftsforum-ki-ist-in-davos-nachmieter-der-russen-19452071.html
+# https://m.faz.net/aktuell/wirtschaft/kuenstliche-intelligenz/ki-revolution-ohne-europa-weltwirtschaftsforum-in-davos-zeigt-realitaet-19454178.html
+# https://www.faz.net/aktuell/stil/quarterly/co2-aus-der-luft-holen-carbon-capture-soll-die-klima-katastrophe-abwenden-19617614.html
 
 if DEBUG: # read_article()
   url = "https://www.faz.net/aktuell/wissen/forschung-politik/gefaelschte-forschung-wie-organisationen-ergebnisse-fuer-profit-erfinden-19416217.html"

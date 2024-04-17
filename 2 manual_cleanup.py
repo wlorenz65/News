@@ -56,7 +56,7 @@ if nDEBUG:
 
 if nDEBUG:
   if not db.block_patterns_and_topics: log("Error: db.block_patterns_and_topics is empty!"); exit(1)
-  logi(f'saving {len(db.block_patterns_and_topics)} entries to file "2 restore db.block_patterns_and_topics.py"')
+  logi(f'saving {len(db.block_patterns_and_topics)} entries to {os.path.abspath("2 restore db.block_patterns_and_topics.py")}')
   import pprint
   with open("2 restore db.block_patterns_and_topics.py", "w") as f:
     f.write(f"""\

@@ -26,7 +26,8 @@ def read_new_headlines():
           if a.column not in columns: raise ValueError(f"{a.column=} not in {columns=}")
           if a.category not in categories: raise ValueError(f"{a.category=} not in {categories=}")
           if a.lang != "de":
-            a.title, a.description = gt.translate(a.title + "\n\n" + a.description).split("\n\n")
+            if a.description: a.title, a.description = gt.translate(a.title + "\n\n" + a.description).split("\n\n")
+            else: a.title = gt.translate(a.title)
             dbg.append(f"{a.lang=} => translating headline")
           t_old, d_old = a.title, a.description
           cleanup(a)

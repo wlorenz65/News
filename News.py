@@ -66,7 +66,7 @@ def Stop():
   bottle.redirect("/")
 
 def translate_url(a):
-  if a.lang == "de": return a.url
+  if a.lang == "de" and a.category != "Other": return a.url
   for x in "translate.goog", "archive.li", "techcrunch.com", "xkcd.com", "ansys.com":
     if x in a.url: return a.url
   slash = a.url.index("/", 8)
@@ -74,7 +74,7 @@ def translate_url(a):
 
 def Links_item(a): return f"""\
 <hr>
-<a onclick="read({a.id})" href="{translate_url(a)}">
+<a onclick="read({a.id})" href="{translate_url(a).replace('archive.li', 'archive.ph')}">
  <h4>{a.title}</h4>
  <p>{a.description}</p>
 </a>"""

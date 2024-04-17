@@ -30,15 +30,19 @@ def read_article(a):
     a.url = "https://archive.li/newest/" + a.url
   a.column = "Links"
 
-# registerwall nicht erkannt:
+# Z+ registerwall nicht erkannt:
 # https://www.zeit.de/2024/10/menschenaffen-emotionen-gefuehle-weinen-primatenforschung
 # https://www.zeit.de/2024/10/martinshorn-erfinder-feuerwehr-alarm
 # https://www.zeit.de/2024/14/cannabis-legalisierung-plantage-relzow
-# https://www.zeit.de/gesellschaft/schule/2024-03/schulversuche-pisa-studie-grundschule-reform
 # https://www.zeit.de/2024/14/erinnerung-kleinkinder-kindheit-gedaechtnis
 # https://www.zeit.de/2024/13/kuechenschraenke-trend-farben-preis
 
-# keine paywall:
+# Z+ paywall nicht erkannt:
+# https://www.zeit.de/gesellschaft/schule/2024-03/schulversuche-pisa-studie-grundschule-reform
+
+# keine registerwall, keine paywall, kein Z+ logo:
+# https://www.zeit.de/news/2024-04/05/wie-china-mit-solar-seine-probleme-loest
+# https://www.zeit.de/news/2024-04/05/viele-unterrichtsstunden-an-saechsischen-schulen-ausgefallen
 # https://www.zeit.de/digital/2024-01/ces-2024-tech-messe-usa-innovationen
 
 if DEBUG: # read_article()

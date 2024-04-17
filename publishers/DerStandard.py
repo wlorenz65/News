@@ -116,7 +116,19 @@ def read_article(a):
 
   logo()
 
+# video ohne titel: https://www.derstandard.at/story/3000000213677/warum-kaufte-aurelios-kiamul-1350-liter-wein-im-antiken-aegypten
+
+# videoartikel: https://www.derstandard.at/story/3000000214634/deutsche-polizei-beklagt-unklare-regelungen-bei-cannabis-im-verkehr
+
+# forumsfragen:
+# https://www.derstandard.at/story/3000000214581/umgang-mit-legasthenie-im-erwachsenenalter
+# https://www.derstandard.at/story/3000000214579/staedte-oder-orte-die-ich-schon-immer-mal-besuchen-wollte-aber
+# https://www.derstandard.at/story/3000000214586/projektbasierte-schulsysteme
+# https://www.derstandard.at/story/3000000214588/e-mountain-bikes-radl-fuer-schwachmaten-oder-perfekte-ergaenzung-zum-klassischen-mtb
+
 # doppelte autorennamen: https://www.derstandard.at/story/3000000213355/falschinformationen-zum-dritten-weltkrieg-tiktok
+# https://www.derstandard.at/story/3000000214249/tischuhren-erleben-ein-zartes-revival
+
 # leerzeichen im datum: https://www.derstandard.at/story/3000000213987/putin-ordnet-russische-variante-von-steam-an
 # dailymotion video: https://www.derstandard.at/story/3000000214097/grenznahe-kontrollen-nach-cannabislegalisierung-in-deutschland
 
