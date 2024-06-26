@@ -49,10 +49,13 @@ def read_article(a):
   for x in article.find_all("div", class_="meldungsfooter"): x.decompose()
 
   for picture in article.find_all("picture"):
+    srcset = []
+    for source in picture.find_all("source"):
+      width = re.search(r"\d+", source["media"]).group()
+      srcset.append((int(width), source["srcset"]))
     img = picture.img
-    src = img["src"]
     caption, credits = img["title"].split(" | ")
-    picture.replace_with(bs4.BeautifulSoup(f'<figure>\n<img src="{src}" />\n<figcaption>\n<p>{caption}</p>\n<p class="credits">{credits}</p>\n</figcaption>\n</figure>\n', "html.parser"))
+    picture.replace_with(bs4.BeautifulSoup(figure(src=img["src"], srcset=srcset, caption=caption, credits=credits), "html.parser"))
 
   for pw in article.find_all("div", class_="ts-picture__wrapper"):
     for x in pw.find_all("noscript"): x.decompose()
@@ -64,8 +67,6 @@ def read_article(a):
 
   for x in article.find_all("div", class_="infobox"): x.unwrap()
   for h3 in article.find_all("div", class_="infobox__headline--textonly"): h3.name = "h3"
-
-
 
   show_source_of_unknown_tags(article, soup)
   a.html = cleanup(article, a.url)

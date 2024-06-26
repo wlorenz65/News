@@ -7,6 +7,12 @@ from publishers import (
   TechCrunch, Wired, NYTimes, Press24
 )
 
+publishers["Press24"].paused = True # das wird sonst zuviel
+publishers["FAZ"].paused = True # archive.today geht nicht mehr
+publishers["TechCrunch"].paused = True
+publishers["NYTimes"].paused = True
+publishers["Merkur"].paused = True
+
 import deep_translator
 gt = deep_translator.GoogleTranslator(source="auto", target="de")
 
@@ -18,7 +24,7 @@ def read_new_headlines():
   dbg = []
   for pname, p in publishers.items():
     try:
-     if pname != "Press24": # das wird sonst zuviel, ich komme mit dem Lesen nicht mehr hinterher
+      if p.paused: continue
       for a in reversed(p.read_headlines()):
         if a.url not in db.known_urls:
           dbg.append(f"\n{a=}")
@@ -35,10 +41,14 @@ def read_new_headlines():
           if a.description != d_old: dbg.append(f"cleanup(a) => {a.description=}")
           a.update_blocked("read" not in a.__dict__)
           dbg.append(f"a.update_blocked(update_read={('read' not in a.__dict__)=}) => {a.blocked=}, {a.read=}")
-          if a.read == False:
+          if a.blocked:
             a.category = "Spam"
             a.column = "Headlines"
-            dbg.append(f"{a.read=} => {a.category=}, {a.column=}")
+            dbg.append(f"a.blocked => {a.category=}, {a.column=}")
+            if sum(a.blocked.values()) >= 2:
+              g.to_archive.append(a)
+              dbg.append(f"{sum(a.blocked.values())=} => archived")
+              continue
           elif is_KI(a):
             a.category = "KI.de" if a.lang == "de" else "AI.en"
             if a.read == None: a.read = True
@@ -47,6 +57,10 @@ def read_new_headlines():
             a.column = "Article" if publishers[a.publisher].read_article else "Links"
             dbg.append(f"(a.read and a.column == 'Headlines') => {a.column=}")
           if a.publisher == "Press24" and a.read != False: a.title = re.sub(r" \([\w .!-:]{2,}\)$", "", a.title)
+          if a.column in ("Headlines", "Links"):
+            if a.category == "Other": a.category = "Andere"
+            if a.publisher == "TechCrunch": a.category = "Other"
+            dbg.append(f"(a.column == 'Links') => {a.category=}")
           a.id = db.next_id; db.next_id += 1
           db.articles.append(a)
         db.known_urls[a.url] = time.time()
@@ -110,7 +124,10 @@ thread = None
 
 def Update():
   global thread
+  db.last_save = 9e99
   g.log_errors.clear()
+  download_new_articles()
+  move_buggy_articles_to_links()
   read_new_headlines()
   remove_outdated_urls()
   download_new_articles()
@@ -120,3 +137,4 @@ def Update():
   log_("Update finished.")
   g.log_stop_threads.discard(thread)
   thread = None
+  db.last_save = 0

@@ -108,14 +108,16 @@ class Article(Data):
           if b.l < click_r + 1 and b.r > click_l + 1:
             to_remove.add((b.pattern, b.topic))
 
+      def overlap(b1, b2):
+        #        |l---b1---|r
+        # |l-----|r   b2   |l-----|r
+        if b2.r <= b1.l or b2.l >= b1.r: return False
+        return True
+
       # disable blocks that are overlapped by dontblocks
       for b in activeblocks.copy():
         for d in dontblocks:
-          #        |l---b---|r
-          # |l-----|r   d   |l-----|r
-          # d.r <= b.l or d.l >= b.r: # no overlap
-          # precede with not and resolve logic
-          if d.r > b.l and d.l < b.r: # they overlap
+          if overlap(d, b):
             disabledblocks.append(b)
             activeblocks.remove(b)
             break
@@ -240,7 +242,7 @@ def show_source_of_unknown_tags(article, soup):
       "li", "figure", "img", "figcaption", "hr", "br", "a",
       "b", "strong", "i", "em", "del", "sub", "sup", "code",
       "pre", "table", "thead", "tbody", "tfoot", "tr", "th",
-      "td", "blockquote", "span"):
+      "td", "blockquote", "span", "footer"):
         pre = soup.new_tag("pre")
         pre.attrs = {"class":"error"}
         pre.string = tag.prettify()
@@ -283,7 +285,7 @@ def cleanup(html, base_url):
   s = re.sub(r"<br/></p>", "</p>", s)
   s = s.replace("<code> ", " <code>").replace(" </code>", "</code> ")
   s = s.replace("<td> </td>", "<td>\1</td>").replace("<th> </th>", "<th>\1</th>")
-  blocktags = "(article|h\d|p|pre|ol|ul|li|div|iframe|figure|figcaption|blockquote|hr|table|thead|tbody|tfoot|tr|td|th)"
+  blocktags = "(article|h\d|p|pre|ol|ul|li|div|iframe|figure|figcaption|footer|blockquote|hr|table|thead|tbody|tfoot|tr|td|th)"
   s = re.sub(f" ?(<{blocktags}( .+?)?>) ?", "\n\\1", s)
   s = re.sub(f" ?(</{blocktags}>) ?", "\\1\n", s)
   s = re.sub(r"<(\w+)></(\1)>", "", s) # <tag></tag>
@@ -291,8 +293,8 @@ def cleanup(html, base_url):
   s = re.split("\n+", s)
   d = 0
   for i in range(len(s)):
-    d1 = s[i] in ( "<figure>", "<figcaption>", "<ol>", "<ul>", "<blockquote>", "<table>", "<thead>", "<tbody>", "<tfoot>", "<tr>")
-    d -= s[i] in ("</figure>", "</figcaption>", "</ol>", "</ul>", "</blockquote>", "</table>", "</thead>", "</tbody>", "</tfoot>", "</tr>")
+    d1 = s[i] in ( "<figure>", "<figcaption>", "<footer>", "<ol>", "<ul>", "<blockquote>", "<table>", "<thead>", "<tbody>", "<tfoot>", "<tr>")
+    d -= s[i] in ("</figure>", "</figcaption>", "</footer>", "</ol>", "</ul>", "</blockquote>", "</table>", "</thead>", "</tbody>", "</tfoot>", "</tr>")
     s[i] = d * " " + s[i]
     d += d1
     if not d: s[i] += "\n"
@@ -371,6 +373,37 @@ if nDEBUG: # download_images_and_store_article(a)
   logo()
   exit()
 
+def figure(*, src=None, srcset=None, link=None, caption=None, credits=None):
+  target_width = 600
+  target_ext = "webp"
+  assert src or srcset
+  if srcset:
+    if isinstance(srcset, str):
+      s = []
+      for s_w in srcset.split(","):
+        m = re.match(r"\s*(\S+)\s+(\d+)w\s?", s_w)
+        s.append((int(m.group(2)), m.group(1)))
+      srcset = s
+    shortest_distance, chosen_width = 1<<30, None
+    for s in srcset:
+      d = abs(s[0] - target_width)
+      if d < shortest_distance:
+        chosen_width, shortest_distance = s[0], d
+    srcset = [s for s in srcset if s[0] == chosen_width]
+    for s in srcset:
+      if re.search(fr"(?i)\.{target_ext}\b", s[1]):
+        srcset = [s]; break
+    if not link: link = src
+    src = srcset[0][1]
+  out = "<figure>\n "
+  if link: out += f'<a href="{link}">'
+  out += f'<img src="{src}" />'
+  if link: out += "</a>"
+  if caption: out += f'\n <figcaption>{caption.strip()}</figcaption>'
+  if credits: out += f'\n <footer>{credits.strip()}</footer>'
+  out += "\n</figure>"
+  return out
+
 def embed_youtube(video_id, caption="", credits=""):
   caption = re.sub(r"\s+", " ", str(caption)).strip()
   credits = re.sub(r"\s+", " ", str(credits)).strip()
@@ -379,26 +412,19 @@ def embed_youtube(video_id, caption="", credits=""):
   oembed_url = "https://www.youtube.com/oembed?url=" + video_url
   try:
     with urllib.request.urlopen(oembed_url) as f: info = json.loads(f.read())
-    if not caption: caption = f'<p>Video: {info["title"]}</p>'
-    if video_url not in caption: caption += f'\n<p><a href="{video_url}">{video_url}</a></p>'
-    if not credits: credits = f'<p class="credits">{info["author_name"]}</p>'
-    out = f"""
-      <figure>
-      <img src="{info["thumbnail_url"]}"/>
-      <figcaption>
-      {caption}
-      {credits}
-      </figcaption>
-      </figure>
-    """
+    if not caption: caption = info["title"]
+    if video_url not in caption: caption += f'<br/><a href="{video_url}">{video_url}</a>'
+    if "Video" not in caption: caption = "Video: " + caption
+    if not credits: credits = info["author_name"]
+    out = figure(src=info["thumbnail_url"], link=video_url, caption=caption, credits=credits)
   except Exception:
     out = f'<pre class="error">Video not available: <a href="{video_url}">{video_url}</a></pre>'
   return(bs4.BeautifulSoup(out, "html.parser"))
 
-if DEBUG: # embed_youtube()
+if nDEBUG: # embed_youtube()
   video_id = "YD_DoKo5Dg8"
-  caption = "<p>The Latest Top 10 Is...Sh*t<br/>Hier analysiert der Musiker und Youtuber Rick Beato die Top 10 der Spotify-Charts aus musikalischer Sicht.</p>"
-  credits = '<p class="credits">Rick Beato</p>'
+  caption = "The Latest Top 10 Is...Sh*t<br/>Hier analysiert der Musiker und Youtuber Rick Beato die Top 10 der Spotify-Charts aus musikalischer Sicht."
+  credits = 'Rick Beato'
   print(embed_youtube(video_id, caption, credits))
   exit()
 

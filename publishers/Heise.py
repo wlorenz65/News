@@ -17,7 +17,7 @@ def read_headlines():
     articles.append(a)
   return articles
 
-if DEBUG: # read_headlines()
+if nDEBUG: # read_headlines()
   for a in read_headlines():
     logi(a)
     log(f"age = {(time.time() - a.pubdate) / 3600 :.0f} hrs")
@@ -60,11 +60,14 @@ def read_article(a):
   for x in article.find_all("div", {"class":"incontent3-cls-reduc"}): x.decompose()
   for x in article.find_all("div", {"class":"a-article-header__podcast-teaser"}): x.decompose()
   for x in article.find_all("a-opt-in", {"type":"Podigee"}): x.decompose()
+  for x in article.find_all("div", {"class":"paywall-delimiter"}): x.decompose()
 
   for x in article.find_all("header", {"class":"a-article-header"}): x.unwrap()
   for x in article.find_all("div", {"class":"article-layout__header-container"}): x.unwrap()
   for x in article.find_all("div", {"class":"article-layout__content-container"}): x.unwrap()
   for x in article.find_all("div", {"class":"article-layout__content article-content"}): x.unwrap()
+  for x in article.find_all("div", {"class":"article-layout__content"}): x.unwrap()
+  for x in article.find_all("div", {"class":"article-content"}): x.unwrap()
   for x in article.find_all("div", {"class":"article-image__gallery-container"}): x.unwrap()
   for x in article.find_all("a", {"class":"heiseplus-lnk"}): x.unwrap()
   for x in article.find_all("a-code"): x.unwrap()
@@ -80,16 +83,16 @@ def read_article(a):
   for x in article.find_all("h3"):
     if x.next_element.next_element.next_element.name == "h3": x.decompose()
 
-  cloudimg = "https://heise.cloudimg.io/width/610/q70.png-lossy-70.webp-lossy-70.foil1/_www-heise-de_" # 336, 1008, 610, 1220
   for lb in article.find_all("a-lightbox"):
-    for p in lb.find_all("p", {"class":"a-caption__source"}): p.attrs = {"class":"credits"}
-    for x in lb.find_all("div"): x.unwrap()
-    for x in lb.find_all("a-img"): x.unwrap()
-    for x in lb.find_all("noscript"): x.decompose()
-    if lb.img.parent.name != "a": lb.img.wrap(soup.new_tag("a"))
-    lb.img.parent["href"] = lb["src"]
-    lb.img["src"] = cloudimg + lb["src"]
-    lb.unwrap()
+    for x in lb.find_all("a-img"): x.decompose()
+    caption = lb.find("p", class_="a-caption__text")
+    if caption: caption = caption.decode_contents()
+    text = lb.find("p", class_="text")
+    if text: caption += text.decode_contents()
+    credits = lb.find("p", class_="a-caption__source")
+    if credits: credits = credits.decode_contents()
+    figstr = figure(src=lb["src"], srcset=lb.img.get("srcset"), caption=caption, credits=credits)
+    lb.replace_with(bs4.BeautifulSoup(figstr, "html.parser"))
 
   def read_gallery(url):
     out = []
@@ -98,19 +101,18 @@ def read_article(a):
       soup = url_to_soup(f"{url}?bild={i}")
       if not out: out.append(f"<h3>Bilderstrecke {soup.h1.text}</h3>")
       c = soup.find("div", {"class":"bilderstrecke_nojs container ho"})
-      out.append("<figure>")
-      src = re.sub("^.*_www-heise-de_", "", c.img['src'])
-      out.append(f'<a href="{src}"><img src="{cloudimg + src}"></a>')
-      out.append("<figcaption>")
+      src = c.img['src']
+      link = re.sub("^.*_www-heise-de_", "", src)
       for x in c.find_all("div", {"class":"tik4-rich-text"}): x.unwrap()
       for x in c.find_all("div", {"class":"notranslate"}): x.decompose()
       for p in c.find_all("div", {"class":"elementToProof"}): p.name = "p"
       for x in c.find_all("p"):
         if x.parent.name == "p": x.unwrap()
-      for p in c.find_all("p"): out.append(str(p))
-      for p in c.find_all("span", {"class":"bilderstrecke_nojs_img_source"}): out.append(f'<p class="credits">{p.text}</p>')
-      out.append("</figcaption>")
-      out.append("</figure>")
+      caption = ""
+      for p in c.find_all("p"): caption += p.decode_contents()
+      credits = ""
+      for p in c.find_all("span", class_="bilderstrecke_nojs_img_source"): credits += p.decode_contents()
+      out.append(figure(src=src, link=link, caption=caption, credits=credits))
       if "bild=0" in c.find("a", {"class":"bilderstrecke_nojs_navi_next"})["href"]: break
     else:
       out.append(f'<p><i>(<a href="{url}?bild={i+1}">More images online</a>)</i></p>')
@@ -133,7 +135,7 @@ def read_article(a):
     out = []
     if img:
       out.append("<figure>")
-      out.append(f'<img src=\"{cloudimg + img}\">')
+      out.append(f'<img src=\"{img}\">')
       out.append("<figcaption>")
     out.append(f'<p><i>(<a href="{a.url}">This article online with embedded Kaltura video</a>)</i></p>')
     if img:
@@ -172,13 +174,13 @@ def read_article(a):
   logo()
 
 if DEBUG: # read_article()
-  url = "https://www.heise.de/news/IT-Sicherheitsbehoerden-geben-Tipps-fuer-sichere-Software-und-Phishing-Praevention-9339899.html"
+  url = "https://www.heise.de/news/Apple-verweist-auf-neue-Regeln-vorerst-keine-Apple-Intelligence-fuer-EU-iPhones-9774039.html"
   a = Article(url=url, category="Computer", pubdate=int(time.time()), id=0)
   g.cache_urls = True
   read_article(a)
   logi()
   style_article(a)
-  download_images_and_store_article(a)
+  #download_images_and_store_article(a)
   logo()
   with open("DEBUG read_article output.html", "w") as f: f.write(a.html)
   log(a.html.strip())

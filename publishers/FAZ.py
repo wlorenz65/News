@@ -32,6 +32,7 @@ def read_article(a):
   a.column = "Links"
 
 #das ist paywall und wird nicht erkannt
+#da hilft kein archive.li https://www.faz.net/aktuell/wissen/medizin-ernaehrung/schmerzen-nach-operationen-werden-opioide-zu-freizguegig-verschrieben-19654830.html
 #https://www.faz.net/aktuell/rhein-main/region-und-hessen/wie-ein-blackout-die-landwirtschaft-gefaehrden-wuerde-19546412.html
 # https://m.faz.net/aktuell/wirtschaft/unternehmen/weltwirtschaftsforum-ki-ist-in-davos-nachmieter-der-russen-19452071.html
 # https://m.faz.net/aktuell/wirtschaft/kuenstliche-intelligenz/ki-revolution-ohne-europa-weltwirtschaftsforum-in-davos-zeigt-realitaet-19454178.html

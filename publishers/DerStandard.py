@@ -1,5 +1,5 @@
 from GLOBALS import *; DEBUG = (__name__ == "__main__")
-
+#https://www.derstandard.at/story/3000000225300/leopard-2-a-rc-30-ist-der-neue-roboterpanzer-aus-europa
 def read_headlines():
   log("DerStandard.read_headlines()")
   articles = []
@@ -54,24 +54,20 @@ def read_article(a):
   for x in article.find_all("script", "js-embed-template"):
     x.replace_with(bs4.BeautifulSoup(html_.unescape(x.text), "html.parser"))
 
-  for figure in article.find_all("figure", {"data-type":"image"}):
-    img = figure.img
+  lead_figure = ""
+  for f in article.find_all("figure", {"data-type":"image"}):
+    img = f.img
     src = img.get("src") or img.get("data-lazy-src") or img.get("data-fullscreen-src")
-    out = f'<figure>\n<img src="{src}"/>\n'
-    caption = figure.figcaption
-    credits = figure.footer
-    if caption or credits:
-      out += "<figcaption>\n"
-      if caption:
-        caption.name = "p"
-        out += str(caption) + "\n"
-      if credits:
-        credits.name = "p"
-        credits.attrs = {"class":"credits"}
-        out += str(credits) + "\n"
-      out += "</figcaption>\n"
-    out += "</figure>\n"
-    figure.replace_with(bs4.BeautifulSoup(out, "html.parser"))
+    caption = f.figcaption
+    if caption: caption = caption.decode_contents()
+    credits = f.footer
+    if credits: credits = credits.decode_contents()
+    figstr = figure(src=src, caption=caption, credits=credits)
+    if not lead_figure:
+      lead_figure = figstr
+      f.decompose()
+    else:
+      f.replace_with(bs4.BeautifulSoup(figstr, "html.parser"))
 
   for video in article.find_all("div", {"data-section-type":"video"}):
     iframe = video.iframe
@@ -111,8 +107,8 @@ def read_article(a):
       if not a0.startswith(authors[0]): authors.insert(0, a0)
       if l and a.html[l - 1] == " ": l -= 1
       a.html = a.html[:l] + a.html[r:]
-  aa = f'</p>\n\n<p class="credits"><script>document.write(age({a.pubdate}))</script> by {", ".join(authors)}</p>'
-  a.html = a.html.replace("</p>", aa, 1)
+  aa = f'<p class="credits"><script>document.write(age({a.pubdate}))</script> by {", ".join(authors)}</p>'
+  a.html = a.html.replace("</p>", f"</p>\n\n{aa}\n\n{lead_figure}", 1)
 
   logo()
 

@@ -84,7 +84,7 @@ def Links(category):
   with open("templates/Links.html") as f: style = f.read()
   out = [f"<article>\n\n<h1>Links in {category}</h1>"]
   id_ms = []
-  for a in reversed(db.articles): # stapel abarbeiten
+  for a in db.articles:
     if a.column == "Links" and a.category == category:
       if len(out) - 1 == 10: break
       out.append(Links_item(a))

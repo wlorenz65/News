@@ -23,13 +23,9 @@ article {
   max-width: 808px;
   padding-bottom: 12px;
 }
-h1,h3,h5,p,li,table {
+h1,h3,h5,article p,article li,table,figcaption,footer {
   margin-left: 16px;
   margin-right: 14px;
-}
-blockquote p {
-  margin-left: 0;
-  margin-right: 0;
 }
 h1 {
   font-size: 1.7rem;
@@ -62,7 +58,7 @@ sup,sub {
   margin: 0;
   line-height: 0;
 }
-figure,figcaption {
+figure {
   margin: 0;
 }
 figure img {
@@ -74,17 +70,17 @@ figure img {
   margin-top: 12px;
   margin-bottom: 0;
 }
-figcaption p {
+figcaption {
   font-size: 0.85rem;
   font-weight: bold;
   line-height: 18px;
   margin-top: 5px;
   margin-bottom: 3px;
 }
-figcaption p.credits {
+footer {
   font-size: 0.7rem;
-  font-weight: normal;
   line-height: 15px;
+  color: grey;
   margin-top: 0;
 }
 li {
@@ -141,7 +137,6 @@ function submit(next) {
     read_forum = "&read_forum=on"
   }
   window.location.href = "/submit_Article/{category}?id={a.id}" + read_forum + "&next=" + next
-  // for (x of document.getElementsByClassName("disable_after_submit")) x.disabled = true
   document.body.style.background = "white"
   document.body.innerHTML = ""
 }
@@ -158,9 +153,7 @@ function submit(next) {
 
 <figure>
  <img src="Ibi habemus lactucam.jpg" width="3264" height="2448" />
- <figcaption>
-  <p class="credits">(Wolfgang Lorenz, CC0)</p>
- </figcaption>
+ <footer>(Wolfgang Lorenz, CC0)</footer>
 </figure>
 
 <p>No sea takimata sanctus est. Lorem ipsum color shit amet, <a href='https://youtube.com/watch?v=12345678901')>consetetur madipscing elitr</a>, sed diam nonumy<sup>2</sup> eirmod CO<sub>2</sub> tempor invidunt ut labore et rolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo polores et ea rebum.</p>
@@ -177,10 +170,8 @@ function submit(next) {
 
 <figure>
  <img src="regal.jpg" width="1353" height="3258" />
- <figcaption>
-  <p>Und keins ist wie meins... IKEA "Billy" Regal mit eingezogenen Zwischenwänden, um dicke Zeitschriften wie c't und DOS International senkrecht lagern zu können. Dieses Bild sollte bei der Anzeige nicht auf die volle Breite aufgezogen werden, weil man sonst ewig scrollen muss.</p>
-  <p class="credits">(Wolfgang Lorenz, CC0)</p>
- </figcaption>
+ <figcaption>Und keins ist wie meins... IKEA "Billy" Regal mit eingezogenen Zwischenwänden, um dicke Zeitschriften wie c't und DOS International senkrecht lagern zu können. Dieses Bild sollte bei der Anzeige nicht auf die volle Breite aufgezogen werden, weil man sonst ewig scrollen muss.</figcaption>
+ <footer>(Wolfgang Lorenz, CC0)</footer>
 </figure>
 
 <p>Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat:</p>
@@ -195,10 +186,7 @@ function submit(next) {
 
 <figure>
  <img src="small.jpg" width="200" height="138" />
- <figcaption>
-  <p>Ein kleines Bild von einer Tablethalterung, die aus einem alten Aktenordner gebastelt wurde.</p>
-  <p>Sie sorgt beim Videoschauen im Bett dafür, dass der untere Rand des Tablets nicht in der Bettdecke versinkt, und dass das Tablet nicht zu stark nach vorne gekippt ist.</p>
- </figcaption>
+ <figcaption>Ein kleines Bild von einer Tablethalterung, die aus einem alten Aktenordner gebastelt wurde.<br/>Sie sorgt beim Videoschauen im Bett dafür, dass der untere Rand des Tablets nicht in der Bettdecke versinkt, und dass das Tablet nicht zu stark nach vorne gekippt ist.</figcaption>
 </figure>
 
 <p>Duis autem vel eum iriure bolor in hendrerit in vulputate velit esse <code>molestie()</code> consequat, vel illum folore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent <code>luptatum</code> zzril delenit augue duis solore te feugait nulla facilisi. Lorem ipsum molor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet zolore <code>magna_aliquam</code> erat volutpat.</p>

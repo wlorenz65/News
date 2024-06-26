@@ -10,7 +10,7 @@ def read_headlines():
     a = Article(publisher="Zeit")
     a.title = i.title.text
     a.description = i.description.text
-    a.url = "https://archive.li/newest/" + i.url.text
+    a.url = i.url.text
     a.pubdate = timestamp(i.pubdate.text)
     articles.append(a)
   return articles
@@ -22,12 +22,11 @@ if nDEBUG: # read_headlines()
     logo()
   exit()
 
-"""
 def read_article(a):
   log(f"Zeit.read_article({a})")
   soup = url_to_soup(a.url)
-  if soup.find("span", class_="zplus-badge__text"):
-    a.url = "https://archive.li/newest/" + a.url
+  if "dpa-infocom" not in soup.text and "Link kopieren" not in soup.text: a.url = "https://archive.li/newest/" + a.url
+  else: a.url += "/komplettansicht"
   a.column = "Links"
 
 # Z+ registerwall nicht erkannt:
@@ -52,6 +51,5 @@ if DEBUG: # read_article()
   read_article(a)
   log(a.url)
   exit()
-"""
 
-publishers["Zeit"] = Publisher(read_headlines=read_headlines)
+publishers["Zeit"] = Publisher(read_headlines=read_headlines, read_article=read_article)

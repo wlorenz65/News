@@ -36,7 +36,7 @@ def read_article(a):
     if not out:
       authors = []
       an = article.find("span", {"class":"authors__name"})
-      if an: authors.append(an.text)
+      if an: authors.append(an.text.strip())
       authors.append("Golem.de")
       f = soup.find("section", {"id":"comments"})
       if f: a.forum_url = f.a["href"]
@@ -50,19 +50,26 @@ def read_article(a):
     for x in article.find_all("div", {"class":"authors"}): x.decompose()
     for x in article.find_all("ul", {"class":"social-tools"}): x.decompose()
     for x in article.find_all("div", {"id":"narando-placeholder"}): x.decompose()
-    for p in article.find_all("span", {"class":"big-image-sub"}): p.name = "p"
-    for p in article.find_all("span", {"class":"big-image-lic"}): p.name = "p"; p.attrs = {"class":"credits"}
     for x in article.find_all("div", {"class":"formatted"}): x.unwrap()
     for x in article.find_all("section"): x.unwrap()
     for x in article.find_all("aside"): x.decompose()
     for x in article.find_all("div", {"class":"toc"}): x.decompose()
     for h in article.find_all("h2"): h.name = "h3"
     for x in article.find_all("div", {"class":"topictags"}): x.decompose()
+
+    for f in article.find_all("figure", class_="hero"):
+      link = None
+      srcset = srcset=f.img["srcset"]
+      if srcset: link = re.search(r"\b(\S+) 1.5x\b", srcset).group(1)
+      fstr = figure(src=f.img["src"], link=link, caption=f.find("span", class_="big-image-sub").text, credits=f.find("span", class_="big-image-lic").text)
+      f.replace_with(bs4.BeautifulSoup(fstr, "html.parser"))
+
     for x in article.find_all("figure"):
       if x.find("style"): x.decompose()
     for x in article.find_all("table", {"id":"table-jtoc"}): x.decompose()
     for x in article.find_all("ul", {"class":"social-tools"}): x.decompose()
     for x in article.find_all("ol", {"class":"list-pages"}): x.decompose()
+    for x in article.find_all("div", {"class":"paywall-content"}): x.decompose()
     for x in article.find_all("a"):
       if "golem.de/specials/" in x["href"]: x.unwrap()
     for x in article.find_all("h3"):
@@ -83,14 +90,8 @@ def read_article(a):
           caption = img["title"]
           credits = re.search(r"\(Bild: .*\)$", caption)
           if credits: credits = credits.group(0); caption = caption[:-(len(credits) + 1)]
-          g.append("<figure>")
-          g.append(f"""<a href="{img['data-src-full']}"><img src="{img['data-src']}"/></a>""")
-          if caption or credits:
-            g.append("<figcaption>")
-            if caption: g.append(f"<p>{caption}</p>")
-            if credits: g.append(f'<p class="credits">{credits}</p>')
-            g.append("</figcaption>")
-          g.append("</figure>")
+          fstr = figure(src=img["data-src"], link=img_url, caption=caption, credits=credits)
+          g.append(fstr)
       gallery.replace_with(bs4.BeautifulSoup("\n".join(g), "html.parser"))
 
     for td in article.find_all("div", {"class":"golem_tablediv"}):
@@ -123,7 +124,7 @@ def read_article(a):
   logo()
 
 if DEBUG: # read_article()
-  url = "https://www.golem.de/news/anzeige-dieses-balkonkraftwerk-ist-kurz-doppelt-reduziert-2404-183790.html"
+  url = "https://www.golem.de/news/ki-apple-soll-kurz-vor-vereinbarung-mit-openai-stehen-2405-185018.html"
   a = Article(url=url, category="Computer", pubdate=int(time.time()))
   g.cache_urls = True
   read_article(a)
