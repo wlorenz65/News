@@ -26,7 +26,6 @@ def read_article(a):
   log(f"Zeit.read_article({a})")
   soup = url_to_soup(a.url)
   if "dpa-infocom" not in soup.text and "Link kopieren" not in soup.text: a.url = "https://archive.li/newest/" + a.url
-  else: a.url += "/komplettansicht"
   a.column = "Links"
 
 # Z+ registerwall nicht erkannt:

@@ -47,7 +47,14 @@ def read_article(a):
   for x in article.find_all("div", class_="copytext-element-wrapper"):
     if x.find("div", class_="teaser-absatz__teaserinfo"): x.decompose()
   for x in article.find_all("div", class_="meldungsfooter"): x.decompose()
+  for x in article.find_all("script"): x.decompose()
+  for x in article.find_all("div", class_="v-instance"): x.decompose()
 
+  for pw in article.find_all("div", class_=("ts-picture__wrapper", "ts-picture__poster-wrapper")):
+    for x in pw.find_all("noscript"): x.decompose()
+    pw.unwrap()
+
+  lead_picture = ""
   for picture in article.find_all("picture"):
     srcset = []
     for source in picture.find_all("source"):
@@ -55,11 +62,10 @@ def read_article(a):
       srcset.append((int(width), source["srcset"]))
     img = picture.img
     caption, credits = img["title"].split(" | ")
-    picture.replace_with(bs4.BeautifulSoup(figure(src=img["src"], srcset=srcset, caption=caption, credits=credits), "html.parser"))
+    fig_str = figure(src=img["src"], srcset=srcset, caption=caption, credits=credits)
+    if not lead_picture: lead_picture = "\n\n" + fig_str; picture.decompose()
+    else: picture.replace_with(bs4.BeautifulSoup(fig_str, "html.parser"))
 
-  for pw in article.find_all("div", class_="ts-picture__wrapper"):
-    for x in pw.find_all("noscript"): x.decompose()
-    pw.unwrap()
   for x in article.find_all("div", class_="seitenkopf__media"): x.unwrap()
   for x in article.find_all("div", class_="absatzbild"): x.unwrap()
   for x in article.find_all("div", class_="absatzbild__media"): x.unwrap()
@@ -68,14 +74,17 @@ def read_article(a):
   for x in article.find_all("div", class_="infobox"): x.unwrap()
   for h3 in article.find_all("div", class_="infobox__headline--textonly"): h3.name = "h3"
 
+  strong = article.strong
+  if strong: strong.unwrap()
+
   show_source_of_unknown_tags(article, soup)
   a.html = cleanup(article, a.url)
   aa = f'</p>\n\n<p class="credits"><script>document.write(age({a.pubdate}))</script> by {", ".join(authors)}</p>'
-  a.html = a.html.replace("</p>", aa, 1)
+  a.html = a.html.replace("</p>", aa + lead_picture, 1)
   logo()
 
 if DEBUG: # read_article()
-  url = "https://www.tagesschau.de/ausland/asien/brennpunkte-naher-osten-100.html"
+  url = "https://www.tagesschau.de/wissen/schlafdauer-durchschnitt-100.html"
   a = Article(url=url, pubdate=int(time.time()), id=0)
   g.cache_urls = True
   read_article(a)

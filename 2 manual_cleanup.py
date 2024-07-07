@@ -18,7 +18,7 @@ if nDEBUG:
 
 if nDEBUG:
   b = db.block_patterns_and_topics
-  b["*"] = ""
+  b["Sicherheitsvorfall"] = "Sicherheit"
   b["*"] = ""
   b["*"] = ""
   b["*"] = ""

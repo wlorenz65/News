@@ -1,5 +1,5 @@
 from GLOBALS import *; DEBUG = (__name__ == "__main__")
-#https://www.derstandard.at/story/3000000225300/leopard-2-a-rc-30-ist-der-neue-roboterpanzer-aus-europa
+
 def read_headlines():
   log("DerStandard.read_headlines()")
   articles = []
@@ -72,10 +72,8 @@ def read_article(a):
   for video in article.find_all("div", {"data-section-type":"video"}):
     iframe = video.iframe
     if iframe:
-      caption = video.figcaption
-      if caption: caption.name = "p"
-      credits = video.footer
-      if credits: credits.name, credits.attrs = "p", {"class":"credits"}
+      caption = decode_contents_and_trim_str(video.figcaption)
+      credits = decode_contents_and_trim_str(video.footer)
       src = iframe.get("src", "")
       if "youtube.com" in src:
         video_id = re.search(r"/embed/([a-zA-Z0-9_-]{11})\b", src).group(1)
@@ -129,7 +127,7 @@ def read_article(a):
 # dailymotion video: https://www.derstandard.at/story/3000000214097/grenznahe-kontrollen-nach-cannabislegalisierung-in-deutschland
 
 if DEBUG: # read_article()
-  url = "https://www.derstandard.at/story/3000000213355/falschinformationen-zum-dritten-weltkrieg-tiktok"
+  url = "https://www.derstandard.at/story/3000000225300/leopard-2-a-rc-30-ist-der-neue-roboterpanzer-aus-europa"
   a = Article(url=url, pubdate=int(time.time()), id=0)
   g.cache_urls = True
   read_article(a)

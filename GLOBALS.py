@@ -373,6 +373,13 @@ if nDEBUG: # download_images_and_store_article(a)
   logo()
   exit()
 
+def decode_contents_and_trim_str(tag):
+  if not tag: return ""
+  s = tag.decode_contents()
+  s = re.sub(r"^(\s|<br/>)+", "", s)
+  s = re.sub(r"(\s|<br/>)+$", "", s)
+  return s
+
 def figure(*, src=None, srcset=None, link=None, caption=None, credits=None):
   target_width = 600
   target_ext = "webp"
@@ -413,8 +420,7 @@ def embed_youtube(video_id, caption="", credits=""):
   try:
     with urllib.request.urlopen(oembed_url) as f: info = json.loads(f.read())
     if not caption: caption = info["title"]
-    if video_url not in caption: caption += f'<br/><a href="{video_url}">{video_url}</a>'
-    if "Video" not in caption: caption = "Video: " + caption
+    if not caption.startswith("Video"): caption = "Video: " + caption
     if not credits: credits = info["author_name"]
     out = figure(src=info["thumbnail_url"], link=video_url, caption=caption, credits=credits)
   except Exception:
