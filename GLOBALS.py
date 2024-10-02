@@ -158,8 +158,8 @@ class Comment(Data): pass
 class Publisher(Data): pass
 
 publishers = {}
-categories = ("KI.de", "AI.en", "Computer", "Andere", "Other", "Spam")
-columns = ("Links", "Category", "Article", "Forum", "Headlines")
+categories = ("KI", "Computer", "Andere", "Spam")
+columns = ("Links", "Category", "Article", "Headlines")
 user_agent = {"User-Agent":"Mozilla/5.0 (Android 8.1.0; Mobile; rv:109.0) Gecko/117.0 Firefox/117.0"}
 
 g.to_archive = []
@@ -181,7 +181,7 @@ class DB(Data):
     with open("3 News.db", "wb") as f: pickle.dump(db, f)
     db.last_save = time.time()
   def autosave(db):
-    if time.time() - db.last_save >= 600: db.savenow()
+    if time.time() - db.last_save >= 120: db.savenow()
 try:
   with open("3 News.db", "rb") as f: db = pickle.load(f)
 except FileNotFoundError:

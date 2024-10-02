@@ -7,7 +7,7 @@ def read_headlines():
   soup = bs4.BeautifulSoup(feed, "html.parser")
   articles = []
   for i in soup.find_all("item"):
-    a = Article(publisher="The_Decoder", category="KI.de", read=True)
+    a = Article(publisher="The_Decoder", category="KI", read=True)
     a.title = i.title.text
     try: a.description = re.search(r"<p>        (.+?)</p>", i.description.text).group(1)
     except: a.description = i.description.text

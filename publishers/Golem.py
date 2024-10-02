@@ -59,7 +59,7 @@ def read_article(a):
 
     for f in article.find_all("figure", class_="hero"):
       link = None
-      srcset = srcset=f.img["srcset"]
+      srcset = f.img.get("srcset")
       if srcset: link = re.search(r"\b(\S+) 1.5x\b", srcset).group(1)
       fstr = figure(src=f.img["src"], link=link, caption=f.find("span", class_="big-image-sub").text, credits=f.find("span", class_="big-image-lic").text)
       f.replace_with(bs4.BeautifulSoup(fstr, "html.parser"))

@@ -7,13 +7,13 @@ def read_headlines():
   soup = bs4.BeautifulSoup(feed, "html.parser")
   articles = []
   for i in soup.find_all("item"):
-    a = Article(publisher="TechXplore", lang="en", category="Other")
+    a = Article(publisher="TechXplore", lang="en")
     a.title = i.title.text
     a.description = i.description.text
     a.url = i.url.text
     t = i.pubdate.text.replace("EST", "-0500").replace("EDT", "-0400")
     a.pubdate = timestamp(t)
-    if i.category.text == "Machine learning & AI": a.category = "AI.en"; a.read = True
+    if i.category.text == "Machine learning & AI": a.category = "KI"; a.read = True
     articles.append(a)
   return articles
 

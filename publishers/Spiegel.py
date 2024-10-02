@@ -12,7 +12,7 @@ def read_headlines():
     a.description = i.description.text if i.description else ""
     a.url = re.sub(r"#.*", "", i.url.text)
     a.pubdate = timestamp(i.pubdate.text)
-    if "/international/" in a.url: a.lang="en"; a.category = "Other"
+    if "/international/" in a.url: a.lang="en"
     if "/sport/" in a.url: a.title += " (Sport)"
     articles.append(a)
   return articles

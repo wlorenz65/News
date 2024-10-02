@@ -9,7 +9,7 @@ def read_headlines():
       feed = f.read().decode("utf-8").replace("<?xml ", "<html ").replace("atom:link", "atom:url").replace("link>", "url>")
     soup = bs4.BeautifulSoup(feed, "html.parser")
     for i in soup.find_all("item"):
-      a = Article(publisher="NYTimes", lang="en", category="Other")
+      a = Article(publisher="NYTimes", lang="en")
       a.title = i.title.text
       a.description = i.description.text if i.description else ""
       a.url = i.url.text # online.py translates with Google instead of using "https://archive.li/newest/" + i.url.text here

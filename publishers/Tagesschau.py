@@ -49,6 +49,7 @@ def read_article(a):
   for x in article.find_all("div", class_="meldungsfooter"): x.decompose()
   for x in article.find_all("script"): x.decompose()
   for x in article.find_all("div", class_="v-instance"): x.decompose()
+  for x in article.find_all("div", class_="copytext__audio"): x.decompose()
 
   for pw in article.find_all("div", class_=("ts-picture__wrapper", "ts-picture__poster-wrapper")):
     for x in pw.find_all("noscript"): x.decompose()

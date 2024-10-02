@@ -7,7 +7,7 @@ def read_headlines():
   soup = bs4.BeautifulSoup(feed, "html.parser")
   articles = []
   for i in soup.find_all("item"):
-    a = Article(publisher="TechCrunch", lang="en", category="Other")
+    a = Article(publisher="TechCrunch", lang="en")
     a.title = i.title.text
     a.description = re.search(r"<p>(.+?)</p>", i.description.text).group(1).replace(" [&#8230;]", "…")
     a.url = i.url.text

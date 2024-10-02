@@ -18,13 +18,14 @@ if nDEBUG:
 
 if nDEBUG:
   b = db.block_patterns_and_topics
-  b["Sicherheitsvorfall"] = "Sicherheit"
-  b["*"] = ""
-  b["*"] = ""
-  b["*"] = ""
-  b["*"] = ""
-  b["*"] = ""
-  b["*"] = ""
+  b["Sicherheitsvorfall*"] = "Sicherheit"
+  b["Free to Play Abenteuer*"] = "Spiel"
+  b["Once Human"] = "Spiel"
+  b["Enkeltrick*"] = "Sicherheit"
+  b["DNS Sicherheit*"] = "Sicherheit"
+  b["DNSSEC"] = "Sicherheit"
+  b["Taser*"] = "Sicherheit"
+  b["Elektroschock*"] = "Sicherheit"
   b["*"] = ""
   b["*"] = ""
   b["*"] = ""

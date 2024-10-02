@@ -7,7 +7,7 @@ def read_headlines():
   soup = bs4.BeautifulSoup(feed, "html.parser")
   articles = []
   for i in soup.find_all("item"):
-    a = Article(publisher="Wired", lang="en", category="Other")
+    a = Article(publisher="Wired", lang="en")
     a.title = i.title.text
     a.description = i.description.text
     a.url = i.url.text

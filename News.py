@@ -66,7 +66,7 @@ def Stop():
   bottle.redirect("/")
 
 def translate_url(a):
-  if a.lang == "de" and a.category != "Other": return a.url
+  if a.lang == "de": return a.url
   for x in "translate.goog", "archive.li", "techcrunch.com", "xkcd.com", "ansys.com":
     if x in a.url: return a.url
   slash = a.url.index("/", 8)
@@ -242,7 +242,7 @@ def submit_Headlines(category):
   for id in q.ids.split(","):
     a = article(id)
     if a.read:
-      a.column = "Article" if publishers[a.publisher].read_article else "Links"
+      a.column = "Article" if publishers[a.publisher].read_article and not a.url.startswith("https://archive.") else "Links"
     else:
       g.to_archive.append(a)
       db.articles.remove(a)
@@ -265,7 +265,7 @@ def Article(category):
       else: a.offline = False
   if a0:
     if publishers[a0.publisher].read_forum:
-      if category == "KI.de" or category == "AI.en" : flags.append("check_read_forum")
+      if category == "KI": flags.append("check_read_forum")
     else: flags.append("hide_read_forum")
     if not a0.forum_url: flags.append("hide_forum_url")
     read_article_start = time.time()

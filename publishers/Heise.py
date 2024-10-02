@@ -61,6 +61,7 @@ def read_article(a):
   for x in article.find_all("div", {"class":"a-article-header__podcast-teaser"}): x.decompose()
   for x in article.find_all("a-opt-in", {"type":"Podigee"}): x.decompose()
   for x in article.find_all("div", {"class":"paywall-delimiter"}): x.decompose()
+  for x in article.find_all("a-img", {"alt":"Eigenwerbung Fachdienst heise KI PRO"}): x.parent.parent.decompose()
 
   for x in article.find_all("header", {"class":"a-article-header"}): x.unwrap()
   for x in article.find_all("div", {"class":"article-layout__header-container"}): x.unwrap()

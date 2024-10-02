@@ -12,6 +12,8 @@ publishers["FAZ"].paused = True # archive.today geht nicht mehr
 publishers["TechCrunch"].paused = True
 publishers["NYTimes"].paused = True
 publishers["Merkur"].paused = True
+publishers["Wired"].paused = True
+publishers["IEEE_Spectrum"].paused = True
 
 import deep_translator
 gt = deep_translator.GoogleTranslator(source="auto", target="de")
@@ -32,7 +34,7 @@ def read_new_headlines():
           if a.column not in columns: raise ValueError(f"{a.column=} not in {columns=}")
           if a.category not in categories: raise ValueError(f"{a.category=} not in {categories=}")
           if a.lang != "de":
-            if a.description: a.title, a.description = gt.translate(a.title + "\n\n" + a.description).split("\n\n")
+            if a.description.strip(): a.title, a.description = gt.translate(a.title + "\n\n" + a.description).split("\n\n")
             else: a.title = gt.translate(a.title)
             dbg.append(f"{a.lang=} => translating headline")
           t_old, d_old = a.title, a.description
@@ -50,7 +52,7 @@ def read_new_headlines():
               dbg.append(f"{sum(a.blocked.values())=} => archived")
               continue
           elif is_KI(a):
-            a.category = "KI.de" if a.lang == "de" else "AI.en"
+            a.category = "KI"
             if a.read == None: a.read = True
             dbg.append(f"is_KI(a) => {a.category=}, {a.read=}")
           if a.read and a.column == "Headlines":
