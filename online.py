@@ -14,6 +14,9 @@ publishers["NYTimes"].paused = True
 publishers["Merkur"].paused = True
 publishers["Wired"].paused = True
 publishers["IEEE_Spectrum"].paused = True
+publishers["Focus"].paused = True
+publishers["TechXplore"].paused = True
+publishers["ExtremNews"].paused = True
 
 import deep_translator
 gt = deep_translator.GoogleTranslator(source="auto", target="de")

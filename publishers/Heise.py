@@ -13,7 +13,7 @@ def read_headlines():
     a.url = re.sub(r"\?.*", "", i.url.text)
     a.pubdate = timestamp(i.pubdate.text)
     if a.title.startswith("heise+ | "): a.url = "https://archive.li/newest/" + a.url
-    if not a.url.startswith("https://www.heise.de/") or "/download/" in a.url: a.column = "Links"
+    if not a.url.startswith("https://www.heise.de/") or "/download/" in a.url or "/bestenlisten/" in a.url: a.column = "Links"
     articles.append(a)
   return articles
 
@@ -36,7 +36,7 @@ def read_article(a):
   if editor and editor not in authors: authors.append(editor)
   authors.append("Heise.de")
 
-  a.forum_url = urllib.parse.urljoin(a.url, article.find("a", {"class":"comment-button"})["href"])
+  a.forum_url = urllib.parse.urljoin(a.url, article.find("a", {"class":"a-button"})["href"])
 
   for x in article.find_all("div", {"class":"a-article-header__service"}): x.decompose()
   for x in article.find_all("div", {"class":"a-article-header__publish-info"}): x.decompose()
@@ -44,6 +44,7 @@ def read_article(a):
   for x in article.find_all("aside", {"class":"affiliate-info"}): x.decompose()
   for x in article.find_all("div", {"class":"ad-label"}): x.decompose()
   for x in article.find_all("a-paternoster", {"class":"a-paternoster-ad"}): x.decompose()
+  for x in article.find_all("div", {"class":"ad-mobile-group-1"}): x.decompose()
   for x in article.find_all("div", {"class":"ad ad--inread"}): x.decompose()
   for x in article.find_all("div", {"class":"ad ad--inline"}): x.decompose()
   for x in article.find_all("div", {"class":"a-u-inline"}): x.decompose()
@@ -175,7 +176,7 @@ def read_article(a):
   logo()
 
 if DEBUG: # read_article()
-  url = "https://www.heise.de/news/Apple-verweist-auf-neue-Regeln-vorerst-keine-Apple-Intelligence-fuer-EU-iPhones-9774039.html"
+  url = "https://www.heise.de/news/Betrugsmail-Cyberversicherung-muss-Schaden-nicht-ersetzen-10215212.html"
   a = Article(url=url, category="Computer", pubdate=int(time.time()), id=0)
   g.cache_urls = True
   read_article(a)

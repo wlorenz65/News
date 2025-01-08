@@ -28,7 +28,7 @@ def read_article(a):
   img_urls = []
   page = a.url
   while page:
-    soup = url_to_soup(page, headers={"Cookie":"golem_consent20=cmp|220101"})
+    soup = url_to_soup(page, headers={"Cookie":"golem_consent20=cmp|250101"})
     article = soup.article
     next_page = soup.find("a", {"id":"atoc_next"})
     if next_page: next_page = urllib.parse.urljoin(page, next_page["href"])
@@ -124,7 +124,7 @@ def read_article(a):
   logo()
 
 if DEBUG: # read_article()
-  url = "https://www.golem.de/news/ki-apple-soll-kurz-vor-vereinbarung-mit-openai-stehen-2405-185018.html"
+  url = "https://www.golem.de/news/asus-samsung-und-msi-4k-oled-monitore-mit-27-zoll-angekuendigt-2501-192082.html"
   a = Article(url=url, category="Computer", pubdate=int(time.time()))
   g.cache_urls = True
   read_article(a)
