@@ -301,6 +301,7 @@ def cleanup(html, base_url):
   s = "\n".join(s)
   s = s.replace("\1", " ").replace("\2", "\t").replace("\3", "\n")
   s = re.sub(r"(<a .+?>) ?(<img .+?>) ?(</a>)", r"\1\2\3", s)
+  s = s.replace("</figure>\n\n<figure>", "</figure>\n<br/>\n<figure>")
   return s.strip()
 
 if nDEBUG: # cleanup(html, base_url):
