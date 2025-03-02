@@ -10,7 +10,7 @@ Wenn News.py läuft, kann man es vom Browser aus unter _localhost:8080_ erreiche
 
 Die drei Spalten rechts sind offline. Er lädt sich also die Artikel und Headlines aus dem Netz und speichert sie lokal als Dateien ab. So kann man später unterwegs lesen, wenn man keine billige WiFi-Verbindung hat. Es geht auch schneller, der Sprung von einem Artikel zum nächsten dauert ungefähr eine Sekunde, dann ist der Artikel inklusive Aufmacherbild geladen und angezeigt.
 
-Die Spalte _Forum_ ist noch nicht implementiert, und in der Spalte _Headlines_ kann man Artikel ignorieren, zum Lesen vormerken oder bei bestimmten Wortmustern blockieren:
+In der Spalte _Headlines_ kann man Artikel ignorieren, zum Lesen vormerken oder bei bestimmten Wortmustern blockieren:
 
 ![Screenshot of block dialog](Screenshot-block-dialog.jpg)
 

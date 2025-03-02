@@ -52,8 +52,6 @@ def read_article(a):
   for x in article.find_all("nav"): x.decompose()
   for x in article.find_all("div", {"data-section-type":"newsletter"}): x.decompose()
   for x in article.find_all("div", {"data-section-type":"columns"}): x.unwrap()
-  for x in article.find_all("script", "js-embed-template"):
-    x.replace_with(bs4.BeautifulSoup(html_.unescape(x.text), "html.parser"))
 
   lead_figure = ""
   for f in article.find_all("figure", {"data-type":"image"}):
@@ -90,6 +88,7 @@ def read_article(a):
   for x in article.find_all("div", {"data-section-type":"quote"}): x.unwrap()
   for x in article.find_all("figure", {"data-type":"quote"}): x.unwrap()
   for x in article.find_all("div", class_="article-actions"): x.decompose()
+  for x in article.find_all("script"): x.decompose()
 
   show_source_of_unknown_tags(article, soup)
   a.html = cleanup(article, a.url)
