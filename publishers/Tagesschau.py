@@ -50,7 +50,7 @@ def read_article(a):
   for x in article.find_all("script"): x.decompose()
   for x in article.find_all("div", class_="v-instance"): x.decompose()
   for x in article.find_all("div", class_="copytext__audio"): x.decompose()
-
+  for x in article.find_all("div", class_="backlink"): x.decompose()
   for pw in article.find_all("div", class_=("ts-picture__wrapper", "ts-picture__poster-wrapper")):
     for x in pw.find_all("noscript"): x.decompose()
     pw.unwrap()
@@ -74,6 +74,8 @@ def read_article(a):
 
   for x in article.find_all("div", class_="infobox"): x.unwrap()
   for h3 in article.find_all("div", class_="infobox__headline--textonly"): h3.name = "h3"
+  for x in article.find_all("div", class_="backlink"): x.parent.unwrap()
+  for x in article.find_all("div", class_="columns"): x.unwrap()
 
   strong = article.strong
   if strong: strong.unwrap()

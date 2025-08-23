@@ -52,6 +52,8 @@ def read_article(a):
   for x in article.find_all("nav"): x.decompose()
   for x in article.find_all("div", {"data-section-type":"newsletter"}): x.decompose()
   for x in article.find_all("div", {"data-section-type":"columns"}): x.unwrap()
+  for x in article.find_all("div", {"class":"story-tool"}): x.decompose()
+
 
   lead_figure = ""
   for f in article.find_all("figure", {"data-type":"image"}):

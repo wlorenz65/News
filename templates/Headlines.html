@@ -1,20 +1,20 @@
 <!doctype html>
 <html lang="de">
 <head>
-<title>Wolfgang's Private News Feed</title>
+<title>Wolfgangs Newsfeed</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <base target="_blank">
 <style>
 html {
-  font-size: 17px;
+  font-size: 17.5px;
   font-family: sans-serif;
   line-height: 24px;
 }
 body {
   background-color: #f5f5f6;
   margin: 0;
-  margin-bottom: 40vh;
+  margin-bottom: 42vh;
 }
 article {
   background-color: #fffdfa;
@@ -55,40 +55,42 @@ td {
   padding-left: 0;
   text-align: left;
 }
-td h4 {
+td>h4 {
   margin-top: 0px;
   margin-bottom: 3px;
   font-size: 1.1em;
   hyphens: auto;
 }
-td p {
+td>p {
   margin-top: 0px;
   margin-bottom: 3px;
   hyphens: auto;
 }
-tr.ignore th:before {
+tr.ignore>th:before {
   content: " ";
   color: lightgrey;
 }
-tr.ignore td {
+tr.ignore>td {
   color: black;
 }
-tr.read th:before {
+tr.read>th:before {
   content: "📄";
 }
-tr.read td {
+tr.read>td {
   color: darkgrey;
 }
-tr.block th:before {
+tr.block>th:before {
   content: "🚫";
 }
-tr.block td {
+tr.block>td {
   color: red;
 }
 button {
-  font-size: 1em;
-  margin-left: 7px;
-  margin-right: 7px;
+  font-size: 1.08rem;
+  padding: 5px 12px 5px 12px;
+  border: 1px solid;
+  border-radius: 6px;
+  margin: 8px;
 }
 </style>
 <script>

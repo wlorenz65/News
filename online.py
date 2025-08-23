@@ -2,21 +2,8 @@ from GLOBALS import *; DEBUG = (__name__ == "__main__")
 
 from publishers import (
   The_Decoder, Heise, Golem, DerStandard, Tagesschau,
-  ORF, Spiegel, Merkur, FAZ, Zeit, Welt, Focus,
-  ExtremNews, XKCD, IEEE_Spectrum, TechXplore,
-  TechCrunch, Wired, NYTimes, Press24
+  ORF, Spiegel, Merkur, Zeit, XKCD
 )
-
-publishers["Press24"].paused = True # das wird sonst zuviel
-publishers["FAZ"].paused = True # archive.today geht nicht mehr
-publishers["TechCrunch"].paused = True
-publishers["NYTimes"].paused = True
-publishers["Merkur"].paused = True
-publishers["Wired"].paused = True
-publishers["IEEE_Spectrum"].paused = True
-publishers["Focus"].paused = True
-publishers["TechXplore"].paused = True
-publishers["ExtremNews"].paused = True
 
 import deep_translator
 gt = deep_translator.GoogleTranslator(source="auto", target="de")

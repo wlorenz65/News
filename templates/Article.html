@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="de">
 <head>
-<title>Wolfgang's Private News Feed</title>
+<title>Wolfgangs Newsfeed</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <base target="_blank">
@@ -16,13 +16,13 @@ article>*, article>figure>* {
 }
 html {
   font-size: 17px;
-  font-family: sans-serif;
-  line-height: 24px;
+  font-family: Helvetica, Arial, sans-serif;
+  line-height: 26px;
   hyphens: auto;
 }
 body {
   background-color: #f5f5f6;
-  margin-bottom: 36vh;
+  margin-bottom: 38vh;
 }
 article {
   background-color: #fffdfa;
@@ -38,7 +38,7 @@ h1 {
   hyphens: none;
 }
 h3 {
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   margin-top: 20px;
   margin-bottom: 15px;
 }
@@ -53,14 +53,15 @@ p.credits {
   font-size: 0.88rem;
   line-height: 1.25rem;
   color: grey;
+  margin-bottom: -3px;
 }
 sub, sup {
   line-height: 0;
 }
 article>figure {
-  margin-top: 15px;
+  margin-top: 20px;
   padding-bottom: 4px;
-  margin-bottom: 10px;
+  margin-bottom: 14px;
 }
 article>figure>img, article>figure>a>img {
   object-fit: contain;
@@ -89,9 +90,9 @@ blockquote {
   margin: 10px 14px 10px 16px;
 }
 a {
-  color: inherit;
-  text-decoration-style: dotted;
-  text-decoration-color: grey;
+  color: #007;
+  text-decoration: underline 1px dotted #44b;
+  text-underline-offset: 2px;
 }
 p>code, li>code {
   font-size: 0.93rem;
@@ -101,16 +102,16 @@ p>code, li>code {
   border-radius: 4px;
 }
 pre {
-  font-size: 0.88rem;
+  font-size: 0.93rem;
   overflow: auto;
   padding-left: 16px;
   padding-right: 50px;
 }
 table {
   font-size: 0.85rem;
+  overflow: auto;
   line-height: 1.1;
   text-align: left;
-  overflow: auto;
   border-spacing: 0;
 }
 th, td {
@@ -121,8 +122,10 @@ th, td {
   color: red;
 }
 button {
-  font-size: 1rem;
-  padding: 2px 7px 3px 7px;
+  font-size: 1.13rem;
+  padding: 5px 12px 5.3px 12px;
+  border: 1px solid;
+  border-radius: 6px;
   margin: 8px;
 }
 </style>
@@ -139,8 +142,9 @@ function submit(next) {
     read_forum = "&read_forum=on"
   }
   window.location.href = "/submit_Article/{category}?id={a.id}" + read_forum + "&next=" + next
-  document.body.style.background = "white"
-  document.body.innerHTML = ""
+  for (x of document.getElementsByClassName("disable_after_submit")) {
+    x.disabled = true
+  }
 }
 </script>
 </head>

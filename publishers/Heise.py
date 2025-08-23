@@ -64,6 +64,8 @@ def read_article(a):
   for x in article.find_all("div", {"class":"paywall-delimiter"}): x.decompose()
   for x in article.find_all("a-img", {"alt":"Eigenwerbung Fachdienst heise KI PRO"}): x.parent.parent.decompose()
   for x in article.find_all("div", {"class":"ad-mobile-group-3"}): x.decompose()
+  for x in article.find_all("a-gift"): x.decompose()
+  for x in article.find_all("details", {"class":["notice-banner"]}): x.decompose()
 
   for x in article.find_all("header", {"class":"a-article-header"}): x.unwrap()
   for x in article.find_all("div", {"class":"article-layout__header-container"}): x.unwrap()

@@ -12,15 +12,12 @@ def build_table():
       if col == "Category":
         t += cat
       else:
-        total = ready = 0
+        ready = 0
         for a in db.articles:
           if a.column == col and a.category == cat:
-            total += 1
-            ready += 1
-            ready -= (col == "Article" and not a.offline)
-            ready -= (col == "Forum")
-        if total:
-          if ready < total: ready = f"{ready} / {total}"
+            if col != "Article" or a.offline:
+              ready += 1
+        if ready:
           t += f"<a href='/{col}/{cat}'><button>{ready}</button></a>"
         else:
           t += "-"
@@ -44,7 +41,7 @@ def index():
     progress = ""
   if g.log_errors:
     e = f'<pre class="error">{html_.escape(g.log_errors[-1])}</pre>'
-    errors = f'<h3>Last of {len(g.log_errors)} new errors in "4 errors.log":</h3>\n{e}\n'
+    errors = f'<h3>Last of {len(g.log_errors)} new errors in "errors.log":</h3>\n{e}\n'
   else:
     errors = ""
   html = re.sub(r"(?s)<!--buttons-->.*<!--/buttons-->", "\1", html).replace("\1", buttons)

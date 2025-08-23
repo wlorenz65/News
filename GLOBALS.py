@@ -44,7 +44,7 @@ def loge(e = None, reset_indent = None):
   print("\n\033[91m" + e + g.bottle_msg_color)
   g.log_insert_newline = True
   g.log_errors.append(e)
-  with open("4 errors.log", "a+") as f:
+  with open("errors.log", "a+") as f:
     f.seek(0)
     if e not in f.read():
       if f.tell(): f.write("_" * g.terminal_width + "\n")
@@ -165,10 +165,10 @@ user_agent = {"User-Agent":"Mozilla/5.0 (Android 8.1.0; Mobile; rv:109.0) Gecko/
 g.to_archive = []
 class DB(Data):
   def savenow(db):
-    print("Saving", os.path.abspath("3 News.db"))
+    print("Saving", os.path.abspath("News.db"))
     keep_files = False
     if keep_files and not os.path.isdir("archive"): os.mkdir("archive")
-    with open("4 archived_Article_objects.log", "a") as f:
+    with open("archived-article-objects.log", "a") as f:
       while g.to_archive:
         a = g.to_archive.pop(0)
         if a.offline:
@@ -178,12 +178,12 @@ class DB(Data):
               else: os.remove("offline/" + fn)
           del a.offline
         f.write(repr(a) + "\n")
-    with open("3 News.db", "wb") as f: pickle.dump(db, f)
+    with open("News.db", "wb") as f: pickle.dump(db, f)
     db.last_save = time.time()
   def autosave(db):
     if time.time() - db.last_save >= 120: db.savenow()
 try:
-  with open("3 News.db", "rb") as f: db = pickle.load(f)
+  with open("News.db", "rb") as f: db = pickle.load(f)
 except FileNotFoundError:
   db = DB()
   db.next_id = 0
@@ -285,7 +285,7 @@ def cleanup(html, base_url):
   s = re.sub(r"<br/></p>", "</p>", s)
   s = s.replace("<code> ", " <code>").replace(" </code>", "</code> ")
   s = s.replace("<td> </td>", "<td>\1</td>").replace("<th> </th>", "<th>\1</th>")
-  blocktags = "(article|h\d|p|pre|ol|ul|li|div|iframe|figure|figcaption|footer|blockquote|hr|table|thead|tbody|tfoot|tr|td|th)"
+  blocktags = "(article|h\\d|p|pre|ol|ul|li|div|iframe|figure|figcaption|footer|blockquote|hr|table|thead|tbody|tfoot|tr|td|th)"
   s = re.sub(f" ?(<{blocktags}( .+?)?>) ?", "\n\\1", s)
   s = re.sub(f" ?(</{blocktags}>) ?", "\\1\n", s)
   s = re.sub(r"<(\w+)></(\1)>", "", s) # <tag></tag>
@@ -357,7 +357,7 @@ def download_images_and_store_article(a):
     p = os.path.join("offline", fn)
     with urllib.request.urlopen(img.replace(" ", "%20")) as f: data = f.read()
     with open(p, "wb") as f: f.write(data)
-    if i == 0:
+    if i == -10:###
       a.html = a.html.replace("article {", "article {\n  padding-top: 100vh;")
       a.html = a.html.replace(img, fn + "\" onload=\"document.querySelector('article').style.paddingTop='0'")
     else:
