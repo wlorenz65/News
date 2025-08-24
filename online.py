@@ -2,7 +2,7 @@ from GLOBALS import *; DEBUG = (__name__ == "__main__")
 
 from publishers import (
   The_Decoder, Heise, Golem, DerStandard, Tagesschau,
-  ORF, Spiegel, Merkur, Zeit, XKCD
+  ORF, Spiegel, Zeit, XKCD
 )
 
 import deep_translator
